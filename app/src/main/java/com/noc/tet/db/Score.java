@@ -40,6 +40,6 @@ public class Score {
 	  // Will be used by the ArrayAdapter in the ListView
 	  @Override
 	  public String toString() {
-	    return  String.valueOf(score) + "@" + playerName;
+	    return score + "@" + playerName;
 	  }
 }

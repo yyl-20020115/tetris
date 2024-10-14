@@ -5,49 +5,48 @@ import java.util.Random;
 
 public class PieceGenerator {
 
-	public static final int STRAT_RANDOM = 0;
-	public static final int STRAT_7BAG = 1;
+	public static final int START_RANDOM = 0;
+	public static final int START_7BAG = 1;
 	
 	int strategy;
-	int bag[];
+	int[] bag;
 	int bagPointer;
-	private Random rndgen;
+	private final Random random;
 	
-	public PieceGenerator(int strat) {
+	public PieceGenerator(int start) {
 		bag = new int[7];
 		for(int i = 0; i < 7; i++) //initial Permutation
 			bag[i] = i;
 		
-		rndgen = new Random(System.currentTimeMillis());
-		if(strat==STRAT_RANDOM)
-			this.strategy = STRAT_RANDOM;
+		random = new Random(System.currentTimeMillis());
+		if(start== START_RANDOM)
+			this.strategy = START_RANDOM;
 		else
-			this.strategy = STRAT_7BAG;
+			this.strategy = START_7BAG;
 		
 		// Fill initial Bag
 		for(int i = 0; i < 6; i++) {
-			int c = rndgen.nextInt(7-i);
+			int c = random.nextInt(7-i);
 			int t = bag[i]; bag[i] = bag[i+c]; bag[i+c] = t;	/* swap */
 		}
 		bagPointer = 0;
 	}
 
 	public int next() {
-		if(strategy== STRAT_RANDOM)
-			return rndgen.nextInt(7);
+		if(strategy== START_RANDOM)
+			return random.nextInt(7);
 		else {
 			if(bagPointer < 7) {
 				bagPointer++;
-				return bag[bagPointer - 1];
-			} else {
+            } else {
 				// Randomize Bag
 				for(int i = 0; i < 6; i++) {
-					int c = rndgen.nextInt(7-i);
+					int c = random.nextInt(7-i);
 					int t = bag[i]; bag[i] = bag[i+c]; bag[i+c] = t;	/* swap */
 				}
 				bagPointer = 1;
-				return bag[bagPointer - 1];
-			}
-		}
+            }
+            return bag[bagPointer - 1];
+        }
 	}
 }

@@ -12,9 +12,9 @@ public class Row {
 	private Row below; // positive x direction
 	private Row above; // negative x direction
 	private Square[] elements;
-	private Square emptySquare;
-	private int width;
-	private Animator animator;
+	private final Square emptySquare;
+	private final int width;
+	private final Animator animator;
 	private int fillStatus;
 	
 	public Row(int width, Context c) {
@@ -102,10 +102,7 @@ public class Row {
 	}
 	
 	public boolean isFull() {
-		if(fillStatus >= width)
-			return true;
-		else
-			return false;
+        return fillStatus >= width;
 	}
 	
 	public void cycle(long time, Board board) {

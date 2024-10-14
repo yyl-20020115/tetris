@@ -11,8 +11,8 @@ import android.graphics.Canvas;
 
 public class Board extends Component {
 	
-	private int height;
-	private int width;
+	private final int height;
+	private final int width;
 	private Row topRow; // index 0
 	private Row currentRow;
 	private int currentIndex;
@@ -76,7 +76,7 @@ public class Board extends Component {
 		tempRow = topRow;
 		for(int i = 0; i < height; i++) {
 			if(tempRow != null) {
-				tempRow.draw(0,0+i*squareSize,squareSize,blockVas);
+				tempRow.draw(0, i * squareSize,squareSize,blockVas);
 				tempRow = tempRow.below();
 			}
 		}
@@ -196,15 +196,15 @@ public class Board extends Component {
 		if(topRow == null)
 			throw new RuntimeException("BlockBoard was not initialized!");
 		
-		Row interator = topRow.above();
+		Row iterator = topRow.above();
 		for(int i = 0; i < height; i++) {
-			if(interator.interrupt(this)) {
-				interator = topRow.above();
+			if(iterator.interrupt(this)) {
+				iterator = topRow.above();
 				i = 0;
 				valid = false;
 			} else
-				interator = interator.above();
-			if(interator == null)
+				iterator = iterator.above();
+			if(iterator == null)
 				return;
 		}
 		host.display.invalidatePhantom();

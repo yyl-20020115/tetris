@@ -25,15 +25,15 @@ public class GameState extends Component {
 	// References
 	private PieceGenerator rng;
 	public Board board;
-	private GregorianCalendar date;
-	private SimpleDateFormat formatter;
+	private final GregorianCalendar date;
+	private final SimpleDateFormat formatter;
 	public int hourOffset;
 
 	// Game State
 	private String playerName;
 	private int activeIndex, previewIndex;
-	private Piece[] activePieces;
-	private Piece[] previewPieces;
+	private final Piece[] activePieces;
+	private final Piece[] previewPieces;
 	private boolean scheduleSpawn;
 	private long spawnTime;
 	//private boolean paused;
@@ -43,33 +43,33 @@ public class GameState extends Component {
 	//private long consecutiveBonusScore;
 	private int clearedLines;
 	private int level;
-	private int maxLevel;
+	private final int maxLevel;
 	private long gameTime;     // += (systemtime - currenttime) at start of cycle
 	private long currentTime;  // = systemtime at start of cycle
 	private long nextDropTime;
 	private long nextPlayerDropTime;
 	private long nextPlayerMoveTime;
-	private int[] dropIntervals; // =(1/gamespeed)
+	private final int[] dropIntervals; // =(1/gamespeed)
 	private long playerDropInterval;
 	private long playerMoveInterval;
-	private int singleLineScore;
-	private int doubleLineScore;
-	private int trippleLineScore;
-	private int multiTetrisScore;
+	private final int singleLineScore;
+	private final int doubleLineScore;
+	private final int trippleLineScore;
+	private final int multiTetrisScore;
 	private boolean multitetris;
-	private int quadLineScore;
-	private int hardDropBonus;
-	private int softDropBonus;
-	private int spawn_delay;
-	private int piece_start_x;
+	private final int quadLineScore;
+	private final int hardDropBonus;
+	private final int softDropBonus;
+	private final int spawn_delay;
+	private final int piece_start_x;
 	private long actions;
 	private int songtime;
 
 	private long popupTime;
 	private String popupString;
-	private int popupAttack;
-	private int popupSustain;
-	private int popupDecay;
+	private final int popupAttack;
+	private final int popupSustain;
+	private final int popupDecay;
 	private int softDropDistance;
 	
 	private GameState(GameActivity ga) {
@@ -118,9 +118,9 @@ public class GameState extends Component {
 		gameTime = 0;
 		if(PreferenceManager.getDefaultSharedPreferences(host).getString("pref_rng", "sevenbag").equals("sevenbag") ||
 				PreferenceManager.getDefaultSharedPreferences(host).getString("pref_rng", "7-Bag-Randomization (default)").equals("7-Bag-Randomization (default)"))
-			rng = new PieceGenerator(PieceGenerator.STRAT_7BAG);
+			rng = new PieceGenerator(PieceGenerator.START_7BAG);
 		else
-			rng = new PieceGenerator(PieceGenerator.STRAT_RANDOM);
+			rng = new PieceGenerator(PieceGenerator.START_RANDOM);
 		
 		// Initialize Pieces
 		activePieces  = new Piece[7];
@@ -352,9 +352,9 @@ public class GameState extends Component {
 		
 		if(PreferenceManager.getDefaultSharedPreferences(ga).getString("pref_rng", "sevenbag").equals("sevenbag") ||
 				PreferenceManager.getDefaultSharedPreferences(ga).getString("pref_rng", "7-Bag-Randomization (default)").equals("7-Bag-Randomization (default)"))
-			rng = new PieceGenerator(PieceGenerator.STRAT_7BAG);
+			rng = new PieceGenerator(PieceGenerator.START_7BAG);
 		else
-			rng = new PieceGenerator(PieceGenerator.STRAT_RANDOM);
+			rng = new PieceGenerator(PieceGenerator.START_RANDOM);
 
 		board.reconnect(ga);
 		setRunning(true);

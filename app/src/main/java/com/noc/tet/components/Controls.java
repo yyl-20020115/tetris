@@ -21,7 +21,7 @@ public class Controls extends Component {
 	private Vibrator v;
 	private int vibrationOffset;
 	private long shortVibeTime;
-	private int[] lineThresholds;
+	private final int[] lineThresholds;
 	
 	// Player Controls
 	private boolean playerSoftDrop;
@@ -38,8 +38,8 @@ public class Controls extends Component {
 	private boolean rightRotation;
 	private boolean buttonVibrationEnabled;
 	private boolean eventVibrationEnabled;
-	private int initialHIntervalFactor;
-	private int initialVIntervalFactor;
+	private final int initialHIntervalFactor;
+	private final int initialVIntervalFactor;
 	private Rect previewBox;
 	private boolean boardTouched;
 	
@@ -230,7 +230,7 @@ public class Controls extends Component {
 			continuousLeftMove = true;
 			leftMove = false;
 			if(active.moveLeft(board)) { // successful move
-				vibrateShort(); // ES SOLL BEI JEDEM TICK VIBRIEREN
+				vibrateShort();
 				host.display.invalidatePhantom();
 				host.game.setNextPlayerMoveTime(host.game.getNextPlayerMoveTime() + initialHIntervalFactor*host.game.getMoveInterval());
 			} else { // failed move
@@ -241,7 +241,7 @@ public class Controls extends Component {
 		} else if(continuousLeftMove) {
 			if(gameTime >= host.game.getNextPlayerMoveTime()) {
 				if(active.moveLeft(board)) { // successful move
-					vibrateShort(); // ES SOLL BEI JEDEM TICK VIBRIEREN
+					vibrateShort(); //
 					host.display.invalidatePhantom();
 					host.game.setNextPlayerMoveTime(host.game.getNextPlayerMoveTime() + host.game.getMoveInterval());
 				} else { // failed move
@@ -261,7 +261,7 @@ public class Controls extends Component {
 			continuousRightMove = true;
 			rightMove = false;
 			if(active.moveRight(board)) { // successful move
-				vibrateShort(); // ES SOLL BEI JEDEM TICK VIBRIEREN
+				vibrateShort(); //
 				host.display.invalidatePhantom();
 				host.game.setNextPlayerMoveTime(host.game.getNextPlayerMoveTime() + initialHIntervalFactor*host.game.getMoveInterval());
 			} else { // failed move
@@ -272,7 +272,7 @@ public class Controls extends Component {
 		} else if(continuousRightMove) {
 			if(gameTime >= host.game.getNextPlayerMoveTime()) {
 				if(active.moveRight(board)) { // successful move
-					vibrateShort(); // ES SOLL BEI JEDEM TICK VIBRIEREN
+					vibrateShort(); //
 					host.display.invalidatePhantom();
 					host.game.setNextPlayerMoveTime(host.game.getNextPlayerMoveTime() + host.game.getMoveInterval());
 				} else { // failed move
@@ -338,7 +338,7 @@ public class Controls extends Component {
 				host.game.setNextDropTime(host.game.getNextPlayerDropTime() + host.game.getAutoDropInterval());
 				host.game.setNextPlayerDropTime(host.game.getNextPlayerDropTime() + host.game.getSoftDropInterval());
 				
-			// Autodrop if faster than playerDrop
+			// Auto drop if faster than playerDrop
 			} else if(gameTime >= host.game.getNextDropTime()) {
 				if(!active.drop(board)) {
 					// piece finished
@@ -359,7 +359,7 @@ public class Controls extends Component {
 				clearPlayerSoftDrop = false;
 			}
 			
-		// Autodrop if no playerDrop
+		// Auto drop if no playerDrop
 		} else if(gameTime >= host.game.getNextDropTime()) {
 			if(!active.drop(board)) {
 				// piece finished

@@ -25,10 +25,10 @@ public class Animator {
 	private long nextFlash;
 	
 	// Data
-	private Row row;
+	private final Row row;
 	private Bitmap bitmapRow;
-	private int flashCount;
-	private int rawFlashInterval;
+	private final int flashCount;
+	private final int rawFlashInterval;
 	
 	// Constructor
 	public Animator(Context c, Row r) {
@@ -82,7 +82,7 @@ public class Animator {
 	
 	public void draw(int x, int y, int ss, Canvas c) {
 		//float scaleFactor = flashFinishTime / (flashFinishTime-flashProgress);
-		//Bitmap bm = Bitmap.createBitmap(brustWidth, burstHeight, Bitmap.Config.ARGB_8888);
+		//Bitmap bm = Bitmap.createBitmap(burstWidth, burstHeight, Bitmap.Config.ARGB_8888);
 		//Canvas tamp = new Canvas(bm);
 		//transparentPaint.setAlpha(do{(shit.here())}while(you += shit));
 		this.squareSize = ss;

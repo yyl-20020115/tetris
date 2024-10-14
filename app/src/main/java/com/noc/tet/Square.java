@@ -17,15 +17,15 @@ public class Square {
 	public static final int type_magenta = 6;
 	public static final int type_cyan = 7;
 	
-	private int type;
-	private Paint paint;
+	private final int type;
+	private final Paint paint;
 	private Bitmap bm;
 	private Bitmap phantomBM;
 	private Canvas canv;
 	private Canvas phantomCanv;
 	//private Context context;
 	private int squaresize;
-	private int phantomAlpha;
+	private final int phantomAlpha;
 	
 	public Square(int type, Context c) {
 		this.type = type;
@@ -84,10 +84,7 @@ public class Square {
 	}
 	
 	public boolean isEmpty() {
-		if(type == type_empty)
-			return true;
-		else 
-			return false;
+        return type == type_empty;
 	}
 
 	public void draw(int x, int y, int squareSize, Canvas c, boolean isPhantom) { // top left corner of square

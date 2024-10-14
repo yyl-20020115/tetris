@@ -1,5 +1,16 @@
 package com.noc.tet.activities;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.view.MotionEvent;
+import android.view.Window;
+
+import androidx.annotation.RequiresApi;
+
 import com.noc.tet.BlockBoardView;
 import com.noc.tet.R;
 import com.noc.tet.WorkThread;
@@ -7,19 +18,6 @@ import com.noc.tet.components.Controls;
 import com.noc.tet.components.Display;
 import com.noc.tet.components.GameState;
 import com.noc.tet.components.Sound;
-
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.ImageButton;
-import android.widget.Button;
-import android.view.View.OnTouchListener;
 
 
 public class GameActivity extends FragmentActivity {
@@ -35,6 +33,7 @@ public class GameActivity extends FragmentActivity {
 	public static final int NEW_GAME = 0;
 	public static final int RESUME_GAME = 1;
 	
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,101 +84,75 @@ public class GameActivity extends FragmentActivity {
 			gameOver(game.getScore(), game.getTimeString(), game.getAPM());
 		
 		/* Register Button callback Methods */
-		((Button)findViewById(R.id.pausebutton_1)).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				GameActivity.this.finish();
-			}
-		});
-		((BlockBoardView)findViewById(R.id.boardView)).setOnTouchListener(new OnTouchListener() {
-		    @Override
-		    public boolean onTouch(View v, MotionEvent event) {
-		        if(event.getAction() == MotionEvent.ACTION_DOWN) {
-		        	controls.boardPressed(event.getX(), event.getY());
-		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-		        	controls.boardReleased();
-		        }
-		        return true;
-		    }
-		});
-		((ImageButton)findViewById(R.id.rightButton)).setOnTouchListener(new OnTouchListener() {
-		    @Override
-		    public boolean onTouch(View v, MotionEvent event) {
-		        if(event.getAction() == MotionEvent.ACTION_DOWN) {
-		        	controls.rightButtonPressed();
-		        	((ImageButton)findViewById(R.id.rightButton)).setPressed(true);
-		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-		        	controls.rightButtonReleased();
-		        	((ImageButton)findViewById(R.id.rightButton)).setPressed(false);
-		        }
-		        return true;
-		    }
-		});
-		((ImageButton)findViewById(R.id.leftButton)).setOnTouchListener(new OnTouchListener() {
-		    @Override
-		    public boolean onTouch(View v, MotionEvent event) {
-		        if(event.getAction() == MotionEvent.ACTION_DOWN) {
-		        	controls.leftButtonPressed();
-		        	((ImageButton)findViewById(R.id.leftButton)).setPressed(true);
-		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-		        	controls.leftButtonReleased();
-		        	((ImageButton)findViewById(R.id.leftButton)).setPressed(false);
-		        }
-		        return true;
-		    }
-		});
-		((ImageButton)findViewById(R.id.softDropButton)).setOnTouchListener(new OnTouchListener() {
-		    @Override
-		    public boolean onTouch(View v, MotionEvent event) {
-		        if(event.getAction() == MotionEvent.ACTION_DOWN) {
-		        	controls.downButtonPressed();
-		        	((ImageButton)findViewById(R.id.softDropButton)).setPressed(true);
-		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-		        	controls.downButtonReleased();
-		        	((ImageButton)findViewById(R.id.softDropButton)).setPressed(false);
-		        }
-		        return true;
-		    }
-		});
-		((ImageButton)findViewById(R.id.hardDropButton)).setOnTouchListener(new OnTouchListener() {
-		    @Override
-		    public boolean onTouch(View v, MotionEvent event) {
-		        if(event.getAction() == MotionEvent.ACTION_DOWN) {
-		        	controls.dropButtonPressed();
-		        	((ImageButton)findViewById(R.id.hardDropButton)).setPressed(true);
-		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-		        	controls.dropButtonReleased();
-		        	((ImageButton)findViewById(R.id.hardDropButton)).setPressed(false);
-		        }
-		        return true;
-		    }
-		});
-		((ImageButton)findViewById(R.id.rotateRightButton)).setOnTouchListener(new OnTouchListener() {
-		    @Override
-		    public boolean onTouch(View v, MotionEvent event) {
-		        if(event.getAction() == MotionEvent.ACTION_DOWN) {
-		        	controls.rotateRightPressed();
-		        	((ImageButton)findViewById(R.id.rotateRightButton)).setPressed(true);
-		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-		        	controls.rotateRightReleased();
-		        	((ImageButton)findViewById(R.id.rotateRightButton)).setPressed(false);
-		        }
-		        return true;
-		    }
-		});
-		((ImageButton)findViewById(R.id.rotateLeftButton)).setOnTouchListener(new OnTouchListener() {
-		    @Override
-		    public boolean onTouch(View v, MotionEvent event) {
-		        if(event.getAction() == MotionEvent.ACTION_DOWN) {
-		        	controls.rotateLeftPressed();
-		        	((ImageButton)findViewById(R.id.rotateLeftButton)).setPressed(true);
-		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-		        	controls.rotateLeftReleased();
-		        	((ImageButton)findViewById(R.id.rotateLeftButton)).setPressed(false);
-		        }
-		        return true;
-		    }
-		});
+		findViewById(R.id.pausebutton_1).setOnClickListener(arg0 -> GameActivity.this.finish());
+		findViewById(R.id.boardView).setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                controls.boardPressed(event.getX(), event.getY());
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                controls.boardReleased();
+            }
+            return true;
+        });
+		findViewById(R.id.rightButton).setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                controls.rightButtonPressed();
+                findViewById(R.id.rightButton).setPressed(true);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                controls.rightButtonReleased();
+                findViewById(R.id.rightButton).setPressed(false);
+            }
+            return true;
+        });
+		findViewById(R.id.leftButton).setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                controls.leftButtonPressed();
+                findViewById(R.id.leftButton).setPressed(true);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                controls.leftButtonReleased();
+                findViewById(R.id.leftButton).setPressed(false);
+            }
+            return true;
+        });
+		findViewById(R.id.softDropButton).setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                controls.downButtonPressed();
+                findViewById(R.id.softDropButton).setPressed(true);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                controls.downButtonReleased();
+                findViewById(R.id.softDropButton).setPressed(false);
+            }
+            return true;
+        });
+		findViewById(R.id.hardDropButton).setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                controls.dropButtonPressed();
+                findViewById(R.id.hardDropButton).setPressed(true);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                controls.dropButtonReleased();
+                findViewById(R.id.hardDropButton).setPressed(false);
+            }
+            return true;
+        });
+		findViewById(R.id.rotateRightButton).setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                controls.rotateRightPressed();
+                findViewById(R.id.rotateRightButton).setPressed(true);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                controls.rotateRightReleased();
+                findViewById(R.id.rotateRightButton).setPressed(false);
+            }
+            return true;
+        });
+		findViewById(R.id.rotateLeftButton).setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                controls.rotateLeftPressed();
+                findViewById(R.id.rotateLeftButton).setPressed(true);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                controls.rotateLeftReleased();
+                findViewById(R.id.rotateLeftButton).setPressed(false);
+            }
+            return true;
+        });
 
 		((BlockBoardView)findViewById(R.id.boardView)).init();
 		((BlockBoardView)findViewById(R.id.boardView)).setHost(this);
@@ -187,8 +160,7 @@ public class GameActivity extends FragmentActivity {
 	
 	/**
 	 * Called by BlockBoardView upon completed creation
-	 * @param caller
-	 */
+     */
 	public void startGame(BlockBoardView caller){
 		mainThread = new WorkThread(this, caller.getHolder()); 
 		mainThread.setFirstTime(false);
@@ -207,7 +179,7 @@ public class GameActivity extends FragmentActivity {
             try {
             	mainThread.join();
                 retry = false;
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
                 
             }
         }
@@ -215,15 +187,15 @@ public class GameActivity extends FragmentActivity {
 	
 	/**
 	 * Called by GameState upon Defeat
-	 * @param score
-	 */
+     */
+	@RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
 	public void putScore(long score) {
 		String playerName = game.getPlayerName();
-		if(playerName == null || playerName.equals(""))
+		if(playerName == null || playerName.isEmpty())
 			playerName = getResources().getString(R.string.anonymous);//"Anonymous";
 		
 		Intent data = new Intent();
-		data.putExtra(MainActivity.PLAYERNAME_KEY, playerName);
+		data.putExtra(MainActivity.PLAYER_NAME_KEY, playerName);
 		data.putExtra(MainActivity.SCORE_KEY, score);
 		setResult(MainActivity.RESULT_OK, data);
 		
@@ -236,15 +208,15 @@ public class GameActivity extends FragmentActivity {
     	sound.pause();
     	sound.setInactive(true);
     	game.setRunning(false);
-	};
-    
+	}
+
     @Override
     protected void onStop() {
     	super.onStop();
     	sound.pause();
     	sound.setInactive(true);
-    };
-    
+    }
+
     @Override
     protected void onDestroy() {
     	super.onDestroy();
@@ -252,8 +224,8 @@ public class GameActivity extends FragmentActivity {
     	sound.release();
     	sound = null;
     	game.disconnect();
-    };
-    
+    }
+
     @Override
     protected void onResume() {
     	super.onResume();
@@ -271,8 +243,8 @@ public class GameActivity extends FragmentActivity {
 			}
 		}
     	game.setRunning(true);
-    };
-    
+    }
+
     @Override
     public Object onRetainCustomNonConfigurationInstance () {
         return game;

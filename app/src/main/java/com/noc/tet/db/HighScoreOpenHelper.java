@@ -5,24 +5,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class HighscoreOpenHelper extends SQLiteOpenHelper {
+public class HighScoreOpenHelper extends SQLiteOpenHelper {
 
-	public static final String TABLE_HIGHSCORES = "highscores";
+	public static final String TABLE_HIGH_SCORES = "highscores";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_SCORE = "score";
-	public static final String COLUMN_PLAYERNAME = "playername";
+	public static final String COLUMN_PLAYER_NAME = "playername";
 
 	private static final String DATABASE_NAME = "highscores.db";
 	private static final int DATABASE_VERSION = 1;
 
 	// Database creation sql statement
 	private static final String DATABASE_CREATE = "create table "
-	      + TABLE_HIGHSCORES + "(" + COLUMN_ID
+	      + TABLE_HIGH_SCORES + "(" + COLUMN_ID
 	      + " integer primary key autoincrement, " + COLUMN_SCORE
-	      + " integer, " + COLUMN_PLAYERNAME
+	      + " integer, " + COLUMN_PLAYER_NAME
 	      + " text);";
 	  
-    public HighscoreOpenHelper(Context context) {
+    public HighScoreOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -33,10 +33,10 @@ public class HighscoreOpenHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.w(HighscoreOpenHelper.class.getName(),
+		Log.w(HighScoreOpenHelper.class.getName(),
 			"Upgrading database from version " + oldVersion + " to "
 			+ newVersion + ", which will destroy all old data");
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_HIGHSCORES);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_HIGH_SCORES);
 		onCreate(db);
 	}
 

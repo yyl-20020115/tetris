@@ -11,26 +11,25 @@ public class WorkThread extends Thread {
     /**
 	 * 
 	 */
-	private SurfaceHolder surfaceHolder;
+	private final SurfaceHolder surfaceHolder;
     private boolean runFlag = false;
     boolean firstTime = true;
 	public long lastFrameDuration = 0;
 	private long lastFrameStartingTime = 0;
 	int fpslimit;
 	long lastDelay;
-	private GameActivity host;
+	private final GameActivity host;
 
     public WorkThread(GameActivity ga, SurfaceHolder sh) {
-    	host = ga;
+		host = ga;
 		this.surfaceHolder = sh;
         try {
         	fpslimit = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(host).getString("pref_fpslimittext", "35"));
         } catch(NumberFormatException e) {
         	fpslimit = 25;
         }
-        if(fpslimit < 5)
+		if(fpslimit < 5)
         	fpslimit = 5;
-        
 		lastDelay = 100;
     }
 
@@ -45,7 +44,7 @@ public class WorkThread extends Thread {
 
 		long fpsUpdateTime = tempTime + 200;
 		int frames = 0;
-		int frameCounter[] = {0, 0, 0, 0, 0};
+		int []frameCounter = {0, 0, 0, 0, 0};
 		int i = 0;
         
         while (this.runFlag) {
@@ -71,21 +70,22 @@ public class WorkThread extends Thread {
 		            	lastDelay = Math.max(0, lastDelay - 25);
 		            else
 		            	lastDelay+= 25;
-		            
-		            if(lastDelay == 0) {} // no Sleep
-		            else {
-			            try {// do sleep!
-							Thread.sleep(lastDelay);
-						} catch (InterruptedException e) {
-							// e.printStackTrace(); ignore this shit
-						}
-		            }
-		            lastFrameStartingTime = tempTime;
+
+                    if (lastDelay != 0) {
+                        try {// do sleep!
+                            Thread.sleep(lastDelay);
+                        } catch (InterruptedException e) {
+                            // e.printStackTrace(); ignore this shit
+                        }
+                    }  // no Sleep
+
+
+                    lastFrameStartingTime = tempTime;
 	            }
 	            
 	            if(tempTime >= fpsUpdateTime) {
-	            	i = (i + 1) % 5;
-		    		fpsUpdateTime += 200;
+					i = (i + 1) % 5;
+					fpsUpdateTime += 200;
 		    		frames = frameCounter[0] + frameCounter[1] + frameCounter[2] + frameCounter[3] + frameCounter[4];
 		            frameCounter[i] = 0;
 	            }

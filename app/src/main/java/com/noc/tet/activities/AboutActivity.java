@@ -1,7 +1,5 @@
 package com.noc.tet.activities;
 
-import com.noc.tet.R;
-
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
@@ -11,8 +9,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.view.MenuItem;
+
+import com.noc.tet.R;
 
 public class AboutActivity extends PreferenceActivity {
 
@@ -34,56 +33,40 @@ public class AboutActivity extends PreferenceActivity {
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
         
         Preference pref = findPreference("pref_license");
-        pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				String url = getResources().getString(R.string.license_url);
-				Intent i = new Intent(Intent.ACTION_VIEW);
-				i.setData(Uri.parse(url));
-				startActivity(i);
-				return true;
-			}
-		});
+        pref.setOnPreferenceClickListener(preference -> {
+            String url = getResources().getString(R.string.license_url);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+            return true;
+        });
         
         pref = findPreference("pref_license_music");
-        pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				String url = getResources().getString(R.string.music_url);
-				Intent i = new Intent(Intent.ACTION_VIEW);
-				i.setData(Uri.parse(url));
-				startActivity(i);
-				return true;
-			}
-		});
+        pref.setOnPreferenceClickListener(preference -> {
+            String url = getResources().getString(R.string.music_url);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+            return true;
+        });
         
         pref = findPreference("pref_version");
-        pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				String url = getResources().getString(R.string.repository_url);
-				Intent i = new Intent(Intent.ACTION_VIEW);
-				i.setData(Uri.parse(url));
-				startActivity(i);
-				return true;
-			}
-		});
+        pref.setOnPreferenceClickListener(preference -> {
+            String url = getResources().getString(R.string.repository_url);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+            return true;
+        });
         
         pref = findPreference("pref_author");
-        pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-		        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{getResources().getString(R.string.pref_author_url)});
-		        emailIntent.setType("plain/text");
-		        startActivity(Intent.createChooser(emailIntent, "Send email..."));
-				return true;
-			}
-		});
+        pref.setOnPreferenceClickListener(preference -> {
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getResources().getString(R.string.pref_author_url)});
+emailIntent.setType("plain/text");
+startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            return true;
+        });
 		
 	}
 	

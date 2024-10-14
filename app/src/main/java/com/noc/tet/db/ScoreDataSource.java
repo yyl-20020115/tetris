@@ -10,13 +10,13 @@ public class ScoreDataSource {
 
 	// Database fields
 	  private SQLiteDatabase database;
-	  private HighscoreOpenHelper dbHelper;
-	  private String[] allColumns = { HighscoreOpenHelper.COLUMN_ID,
-			  HighscoreOpenHelper.COLUMN_SCORE,
-			  HighscoreOpenHelper.COLUMN_PLAYERNAME};
+	  private final HighScoreOpenHelper dbHelper;
+	  private final String[] allColumns = { HighScoreOpenHelper.COLUMN_ID,
+			  HighScoreOpenHelper.COLUMN_SCORE,
+			  HighScoreOpenHelper.COLUMN_PLAYER_NAME};
 
 	  public ScoreDataSource(Context context) {
-	    dbHelper = new HighscoreOpenHelper(context);
+	    dbHelper = new HighScoreOpenHelper(context);
 	  }
 
 	  public void open() throws SQLException {
@@ -29,12 +29,12 @@ public class ScoreDataSource {
 
 	  public Score createScore(long score, String playerName) {
 	    ContentValues values = new ContentValues();
-	    values.put(HighscoreOpenHelper.COLUMN_SCORE, score);
-	    values.put(HighscoreOpenHelper.COLUMN_PLAYERNAME, playerName);
-	    long insertId = database.insert(HighscoreOpenHelper.TABLE_HIGHSCORES, null, values);
-	    Cursor cursor = database.query(HighscoreOpenHelper.TABLE_HIGHSCORES,
-	        allColumns, HighscoreOpenHelper.COLUMN_ID + " = " + insertId, null,
-	        null, null, HighscoreOpenHelper.COLUMN_SCORE + " DESC");
+	    values.put(HighScoreOpenHelper.COLUMN_SCORE, score);
+	    values.put(HighScoreOpenHelper.COLUMN_PLAYER_NAME, playerName);
+	    long insertId = database.insert(HighScoreOpenHelper.TABLE_HIGH_SCORES, null, values);
+	    Cursor cursor = database.query(HighScoreOpenHelper.TABLE_HIGH_SCORES,
+	        allColumns, HighScoreOpenHelper.COLUMN_ID + " = " + insertId, null,
+	        null, null, HighScoreOpenHelper.COLUMN_SCORE + " DESC");
 	    cursor.moveToFirst();
 	    Score newScore = cursorToScore(cursor);
 	    cursor.close();
@@ -44,7 +44,7 @@ public class ScoreDataSource {
 	  public void deleteScore(Score score) {
 	    long id = score.getId();
 	    //System.out.println("Comment deleted with id: " + id);
-	    database.delete(HighscoreOpenHelper.TABLE_HIGHSCORES, HighscoreOpenHelper.COLUMN_ID
+	    database.delete(HighScoreOpenHelper.TABLE_HIGH_SCORES, HighScoreOpenHelper.COLUMN_ID
 	        + " = " + id, null);
 	  }
 
@@ -57,8 +57,8 @@ public class ScoreDataSource {
 	  }
 
 	public Cursor getCursor() {
-		return database.query(HighscoreOpenHelper.TABLE_HIGHSCORES,
-		        allColumns, null, null, null, null, HighscoreOpenHelper.COLUMN_SCORE + " DESC");
+		return database.query(HighScoreOpenHelper.TABLE_HIGH_SCORES,
+		        allColumns, null, null, null, null, HighScoreOpenHelper.COLUMN_SCORE + " DESC");
 	}
 	  
 }

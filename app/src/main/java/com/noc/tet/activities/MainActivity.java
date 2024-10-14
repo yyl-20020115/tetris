@@ -1,32 +1,31 @@
 package com.noc.tet.activities;
 
-import com.noc.tet.R;
-import com.noc.tet.components.GameState;
-import com.noc.tet.components.Sound;
-import com.noc.tet.db.HighscoreOpenHelper;
-import com.noc.tet.db.ScoreDataSource;
-
+import android.app.AlertDialog;
+import android.app.ListActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.app.AlertDialog;
-import android.app.ListActivity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SeekBar;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
+import com.noc.tet.R;
+import com.noc.tet.components.GameState;
+import com.noc.tet.components.Sound;
+import com.noc.tet.db.HighScoreOpenHelper;
+import com.noc.tet.db.ScoreDataSource;
 
 import java.util.Locale;
 
@@ -38,7 +37,7 @@ public class MainActivity extends ListActivity {
 	/** This key is used to access the player name, which is returned as an Intent from the gameactivity upon completion (gameover).
 	 *  The Package Prefix is mandatory for Intent data
 	 */
-	public static final String PLAYERNAME_KEY = "com.noc.tet.activities.playername";
+	public static final String PLAYER_NAME_KEY = "com.noc.tet.activities.playername";
 	
 	/** This key is used to access the player name, which is returned as an Intent from the gameactivity upon completion (gameover).
 	 *  The Package Prefix is mandatory for Intent data
@@ -95,10 +94,10 @@ public class MainActivity extends ListActivity {
 	    // Use the SimpleCursorAdapter to show the
 	    // elements in a ListView
 	    adapter = new SimpleCursorAdapter(
-	    	(Context)this,
+                this,
 	        R.layout.blockinger_list_item,
 	        mc,
-	        new String[] {HighscoreOpenHelper.COLUMN_SCORE, HighscoreOpenHelper.COLUMN_PLAYERNAME},
+	        new String[] {HighScoreOpenHelper.COLUMN_SCORE, HighScoreOpenHelper.COLUMN_PLAYER_NAME},
 	        new int[] {R.id.text1, R.id.text2},
 	        SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 	    setListAdapter(adapter);
@@ -108,38 +107,20 @@ public class MainActivity extends ListActivity {
 	    startLevelDialog = new AlertDialog.Builder(this);
 		startLevelDialog.setTitle(R.string.startLevelDialogTitle);
 		startLevelDialog.setCancelable(false);
-		startLevelDialog.setNegativeButton(R.string.startLevelDialogCancel, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		startLevelDialog.setPositiveButton(R.string.startLevelDialogStart, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				MainActivity.this.start();
-			}
-		});
+		startLevelDialog.setNegativeButton(R.string.startLevelDialogCancel, (dialog, which) -> dialog.dismiss());
+		startLevelDialog.setPositiveButton(R.string.startLevelDialogStart, (dialog, which) -> MainActivity.this.start());
 	    
 		/* Create Donate Dialog */
 	    donateDialog = new AlertDialog.Builder(this);
 	    donateDialog.setTitle(R.string.pref_donate_title);
 	    donateDialog.setMessage(R.string.pref_donate_summary);
-	    donateDialog.setNegativeButton(R.string.startLevelDialogCancel, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-	    donateDialog.setPositiveButton(R.string.donate_button, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				String url = getResources().getString(R.string.donation_url);
-				Intent i = new Intent(Intent.ACTION_VIEW);
-				i.setData(Uri.parse(url));
-				startActivity(i);
-			}
-		});
+	    donateDialog.setNegativeButton(R.string.startLevelDialogCancel, (dialog, which) -> dialog.dismiss());
+	    donateDialog.setPositiveButton(R.string.donate_button, (dialog, which) -> {
+            String url = getResources().getString(R.string.donation_url);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        });
 	}
 
 	@Override
@@ -193,7 +174,7 @@ public class MainActivity extends ListActivity {
 		if(resultCode != RESULT_OK)
 			return;
 
-		String playerName = data.getStringExtra(PLAYERNAME_KEY);
+		String playerName = data.getStringExtra(PLAYER_NAME_KEY);
 		long score = data.getLongExtra(SCORE_KEY,0);
 
 	    datasource.open();
@@ -203,8 +184,8 @@ public class MainActivity extends ListActivity {
 
     public void onClickStart(View view) {
 		dialogView = getLayoutInflater().inflate(R.layout.seek_bar_dialog, null);
-		leveldialogtext = ((TextView)dialogView.findViewById(R.id.leveldialogleveldisplay));
-		leveldialogBar = ((SeekBar)dialogView.findViewById(R.id.levelseekbar));
+		leveldialogtext = dialogView.findViewById(R.id.leveldialogleveldisplay);
+		leveldialogBar = dialogView.findViewById(R.id.levelseekbar);
 		leveldialogBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
@@ -242,24 +223,24 @@ public class MainActivity extends ListActivity {
     	super.onPause();
     	sound.pause();
     	sound.setInactive(true);
-    };
-    
+    }
+
     @Override
     protected void onStop() {
     	super.onStop();
     	sound.pause();
     	sound.setInactive(true);
     	datasource.close();
-    };
-    
+    }
+
     @Override
     protected void onDestroy() {
     	super.onDestroy();
     	sound.release();
     	sound = null;
     	datasource.close();
-    };
-    
+    }
+
     @Override
     protected void onResume() {
     	super.onResume();
@@ -270,12 +251,12 @@ public class MainActivity extends ListActivity {
 	    adapter.changeCursor(cursor);
 	    
 	    if(!GameState.isFinished()) {
-	    	((Button)findViewById(R.id.resumeButton)).setEnabled(true);
+	    	findViewById(R.id.resumeButton).setEnabled(true);
 	    	((Button)findViewById(R.id.resumeButton)).setTextColor(getResources().getColor(R.color.square_error));
 	    } else {
-	    	((Button)findViewById(R.id.resumeButton)).setEnabled(false);
+	    	findViewById(R.id.resumeButton).setEnabled(false);
 	    	((Button)findViewById(R.id.resumeButton)).setTextColor(getResources().getColor(R.color.holo_grey));
 	    }
-    };
+    }
 
 }

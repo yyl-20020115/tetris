@@ -23,9 +23,9 @@ public abstract class Piece {
 	protected int y; // pattern position
 	protected int dim;    // maximum dimensions for square matrix, so all rotations fit inside!
 	protected int squareSize;
-	protected Square pattern[][]; 	// square matrix
-	protected Square rotated[][]; 	// square matrix
-	private Square emptySquare;
+	protected Square[][] pattern; 	// square matrix
+	protected Square[][] rotated; 	// square matrix
+	private final Square emptySquare;
 	private Canvas cv;
 	private Bitmap bm;
 	private Canvas cvPhantom;
@@ -90,10 +90,10 @@ public abstract class Piece {
 	 * @return true if movement was successfull.
 	 */
 	public boolean setPosition(int x_new, int y_new, boolean noInterrupt, Board board) {
-		boolean collision = false;
-		int leftOffset = 0;
-		int rightOffset = 0;
-		int bottomOffset = 0;
+		boolean collision;
+		int leftOffset;
+		int rightOffset;
+		int bottomOffset;
 		for(int i = 0; i < dim; i++) {
 			for(int j = 0; j < dim; j++) {
 				if(pattern[i][j] != null) {
@@ -182,20 +182,22 @@ public abstract class Piece {
 		cv = new Canvas(bm);
 		for(int i = 0; i < dim; i++) {
 			for(int j = 0; j < dim; j++) {
-				if(pattern[i][j] == null) {} else
-					if(!pattern[i][j].isEmpty())
-						pattern[i][j].draw(j*squareSize, i*squareSize, squareSize, cv, false);
-			}
+                if (pattern[i][j] != null) {
+                    if(!pattern[i][j].isEmpty())
+                        pattern[i][j].draw(j*squareSize, i*squareSize, squareSize, cv, false);
+                }
+            }
 		}
 
 		bmPhantom = Bitmap.createBitmap(squareSize*dim, squareSize*dim, Bitmap.Config.ARGB_8888);
 		cvPhantom = new Canvas(bmPhantom);
 		for(int i = 0; i < dim; i++) {
 			for(int j = 0; j < dim; j++) {
-				if(pattern[i][j] == null) {} else
-					if(!pattern[i][j].isEmpty())
-						pattern[i][j].draw(j*squareSize, i*squareSize, squareSize, cvPhantom, true);
-			}
+                if (pattern[i][j] != null) {
+                    if(!pattern[i][j].isEmpty())
+                        pattern[i][j].draw(j*squareSize, i*squareSize, squareSize, cvPhantom, true);
+                }
+            }
 		}
 	}
 	
@@ -203,9 +205,9 @@ public abstract class Piece {
 	 * 
 	 * @param xOffset board x offset
 	 * @param yOffset board y offset
-	 * @param squareSize
+	 * @param
 	 * @param c
-	 * @param view
+	 * @param
 	 */
 	public void drawOnBoard(int xOffset, int yOffset, int ss, Canvas c) {
 		if(!active)

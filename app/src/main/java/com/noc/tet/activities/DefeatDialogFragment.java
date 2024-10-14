@@ -1,14 +1,12 @@
 package com.noc.tet.activities;
 
-import com.noc.tet.R;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
-//import androidx.fragment.app.DialogFragment;
+import com.noc.tet.R;
 
 public class DefeatDialogFragment extends DialogFragment {
 
@@ -44,13 +42,9 @@ public class DefeatDialogFragment extends DialogFragment {
 				"\n    " + apmString + "\n\n" +
 				getResources().getString(R.string.hint)
 				);
-		builder.setNeutralButton(R.string.defeatDialogReturn, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				((GameActivity)getActivity()).putScore(score);
-			}
-		});
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+			builder.setNeutralButton(R.string.defeatDialogReturn, (dialog, which) -> ((GameActivity)getActivity()).putScore(score));
+		}
 		return builder.create();
 	}
 }

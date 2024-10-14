@@ -16,14 +16,14 @@ public class Display extends Component {
 
 	private int prevPhantomY;
 	private boolean dropPhantom;
-	private Paint paint;
+	private final Paint paint;
 	private int gridRowBorder;
 	private int gridColumnBorder;
 	private int squaresize;
 	private int rowOffset;
-	private int rows;
+	private final int rows;
 	private int columnOffset;
-	private int columns;
+	private final int columns;
 	private boolean landscapeInitialized;
 	private int prev_top;
 	private int prev_bottom;
@@ -31,22 +31,20 @@ public class Display extends Component {
 	private int prev_right;
 	private int textLeft;
 	private int textTop;
-	private int textRight;
-	private int textBottom;
-	private int textLines;
+    private final int textLines;
 	private int textSizeH;
 	private int textEmptySpacing;
-	private Paint textPaint;
-	private Rect textRect;
+	private final Paint textPaint;
+	private final Rect textRect;
 	private int textHeight;
-	private Paint popUptextPaint;
+	private final Paint popUptextPaint;
 	
 	public Display(GameActivity ga) {
 		super(ga);
 		invalidatePhantom();
 		setPhantomY(0);
 		landscapeInitialized = false;
-	    paint = new Paint();
+		paint = new Paint();
 		rows = host.getResources().getInteger(R.integer.zeilen);
 		columns = host.getResources().getInteger(R.integer.spalten);
 
@@ -89,8 +87,8 @@ public class Display extends Component {
 			host.game.getBoard().invalidate();
 			//portraitInitialized = false;
 			landscapeInitialized = true;
-			squaresize   = (int)(((c.getHeight()-1) - 2*rowOffset)/rows);
-			int size2 = (int)(((c.getHeight()-1) - 2*columnOffset)/(columns + 4 + host.getResources().getInteger(R.integer.padding_columns)));
+			squaresize = ((c.getHeight()-1) - 2*rowOffset)/rows;
+			int size2 = ((c.getHeight()-1) - 2*columnOffset)/(columns + 4 + host.getResources().getInteger(R.integer.padding_columns));
 			if(size2 < squaresize) {
 				squaresize = size2;
 				rowOffset = (int)(((c.getHeight()-1) - squaresize*rows)/2);
@@ -104,15 +102,15 @@ public class Display extends Component {
 			prev_right = prev_left + 4*squaresize;
 			textLeft = prev_left;
 			textTop = prev_bottom + 2*squaresize;
-			textRight = (c.getWidth()-1) - columnOffset;
-			textBottom = (c.getHeight()-1) - rowOffset - squaresize;
+            int textRight = (c.getWidth() - 1) - columnOffset;
+            int textBottom = (c.getHeight() - 1) - rowOffset - squaresize;
 			textSizeH = 1;
 
 			// Adaptive Text Size Setup
 			textPaint.setTextSize(textSizeH + 1);
 			while(textPaint.measureText("00:00:00") < (textRight - textLeft)) {
 				//stuff
-				textPaint.getTextBounds((String)"Level:32", 0, 6, textRect);
+				textPaint.getTextBounds("Level:32", 0, 6, textRect);
 				textHeight = textRect.height();
 				textEmptySpacing = ((textBottom - textTop) - (textLines*(textHeight + 3))) / (3 + fpsenabled);
 				if(textEmptySpacing < 10)
@@ -122,7 +120,7 @@ public class Display extends Component {
 				textPaint.setTextSize(textSizeH + 1);
 			}
 			textPaint.setTextSize(textSizeH);
-			textPaint.getTextBounds((String)"Level:32", 0, 6, textRect);
+			textPaint.getTextBounds("Level:32", 0, 6, textRect);
 			textHeight = textRect.height() + 3;
 			textEmptySpacing = ((textBottom - textTop) - (textLines*(textHeight))) / (3 + fpsenabled);
 			
@@ -147,9 +145,7 @@ public class Display extends Component {
 	    	drawTouchIndicator();
 	    
 	    drawPreview(prev_left, prev_top, prev_right, prev_bottom, c);
-
-	    drawTextFillBox(c, fps);
-
+		drawTextFillBox(c, fps);
 		if(PreferenceManager.getDefaultSharedPreferences(host).getBoolean("pref_popup", true))
 			drawPopupText(c);
 	}
@@ -164,7 +160,7 @@ public class Display extends Component {
         for (int zeilePixel = 0; zeilePixel <= rows; zeilePixel ++) {
             c.drawLine(x, y + zeilePixel*squaresize, xBorder, y + zeilePixel*squaresize, paint);
         }
-        for (int spaltePixel = 0; spaltePixel <= columns; spaltePixel ++) {
+		for (int spaltePixel = 0; spaltePixel <= columns; spaltePixel ++) {
             c.drawLine(x + spaltePixel*squaresize, y, x + spaltePixel*squaresize, yBorder, paint);
         }
 
@@ -189,7 +185,7 @@ public class Display extends Component {
         for (int zeilePixel = 0; zeilePixel <= 4; zeilePixel ++) {
             c.drawLine(left, top + zeilePixel*squaresize, right, top + zeilePixel*squaresize, paint);
         }
-        for (int spaltePixel = 0; spaltePixel <= 4; spaltePixel ++) {
+		for (int spaltePixel = 0; spaltePixel <= 4; spaltePixel ++) {
             c.drawLine(left + spaltePixel*squaresize, top, left + spaltePixel*squaresize, bottom, paint);
         }
         
@@ -274,7 +270,7 @@ public class Display extends Component {
 		popUptextPaint.setColor(host.getResources().getColor(color.black));
 		popUptextPaint.setAlpha(host.game.getPopupAlpha());
 
-		int left = columnOffset + ((int)columns*squaresize/2) - ((int)popUptextPaint.measureText(text)/2); // middle minus half text width
+		int left = columnOffset + (columns *squaresize/2) - ((int)popUptextPaint.measureText(text)/2); // middle minus half text width
 		int top = c.getHeight()/2;
 		
 		c.drawText(text, offset+left, top, popUptextPaint); // right

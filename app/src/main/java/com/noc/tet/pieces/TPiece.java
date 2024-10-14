@@ -7,7 +7,7 @@ import android.content.Context;
 
 public class TPiece extends Piece3x3 {
 
-	private Square tSquare;
+	private final Square tSquare;
 
 	public TPiece(Context c) {
 		super(c);

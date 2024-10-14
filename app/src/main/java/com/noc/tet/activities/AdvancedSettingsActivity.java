@@ -45,9 +45,8 @@ public class AdvancedSettingsActivity extends PreferenceActivity implements OnSh
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
-
-        assert key != null;
-        if (key.equals("pref_rng")) {
+		assert key != null;
+		if (key.equals("pref_rng")) {
             Preference connectionPref = findPreference(key);
             // Set summary to be the user-description for the selected value
             if(sharedPreferences.getString(key, "").equals("sevenbag"))

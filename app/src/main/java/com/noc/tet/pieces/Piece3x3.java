@@ -16,17 +16,17 @@ public abstract class Piece3x3 extends Piece {
 	}
 	
 	/**
-	 * @return true if rotation was successfull.
+	 * @return true if rotation was successful.
 	 */
 	@Override
 	public boolean turnLeft(Board board) {
 		int maxLeftOffset = -4;
 		int maxRightOffset = -4;
 		int maxBottomOffset = -4;
-		int leftOffset = 0;
-		int rightOffset = 0;
-		int bottomOffset = 0;
-		Square backup[][] = pattern;
+		int leftOffset;
+		int rightOffset;
+		int bottomOffset;
+		Square[][] backup;
 		// [0][0] ... [0][2]
 		//  ....       ....
 		// [2][0] ... [2][2]
@@ -107,17 +107,17 @@ public abstract class Piece3x3 extends Piece {
 	}
 
 	/**
-	 * @return true if rotation was successfull.
+	 * @return true if rotation was successful.
 	 */
 	@Override
 	public boolean turnRight(Board board) {
 		int maxLeftOffset = -4;
 		int maxRightOffset = -4;
 		int maxBottomOffset = -4;
-		int leftOffset = 0;
-		int rightOffset = 0;
-		int bottomOffset = 0;
-		Square backup[][] = pattern;
+		int leftOffset;
+		int rightOffset;
+		int bottomOffset;
+		Square[][] backup;
 		// [0][0] ... [0][2]
 		//  ....       ....
 		// [2][0] ... [2][2]

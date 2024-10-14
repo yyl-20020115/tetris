@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="user_name">俄罗斯方块玩家</string>
+    <string name="app_name">俄罗斯方块</string>
+    <string name="action_settings">设置</string>
+    <string name="action_backtomain">退回</string>
+    <string name="action_about">关于</string>
+    <string name="action_donate">捐赠</string>
+    <string name="action_help">帮助</string>
+    <string name="startButtonString">开始</string>
+    <string name="resumeButtonString">恢复</string>
+    <string name="quitButtonString">退出</string>
+    <string name="pausebutton">暂停</string>
+    <string name="holdbuttonstring">保持</string>
+    <string name="playerNameInputFieldHint">输入玩家名称</string>
+    <string name="highscoreListDescription">高分榜</string>
+
+    <string name="startLevelDialogTitle">开局</string>
+    <string name="startLevelDialogCancel">取消</string>
+    <string name="startLevelDialogStart">开始</string>
+
+    <string name="title_activity_game">俄罗斯方块</string>
+    <string name="title_activity_help">帮助</string>
+    <string name="score_title">分数</string>
+    <string name="level_title">局</string>
+    <string name="time_title">时间</string>
+    <string name="apm_title">手速</string>
+    <string name="fps_title">帧率</string>
+
+    <string name="defeatDialogTitle">游戏结束</string>
+    <string name="defeatDialogReturn">返回</string>
+    
+    <string name="anonymous">匿名</string>
+    <string name="scoreLabel">分数:</string>
+    <string name="timeLabel">时间:</string>
+    <string name="apmLabel">手速:</string>
+    <string name="hint">提升：本游戏可以横屏也可以竖屏</string>
+    <string name="highscore_title">高分榜</string>
+    
+    <string name="musicAuthorNote">作曲 Pornophonique</string>
+    
+    
+    <string name="title_activity_settings">设置</string>
+    <string name="title_activity_about">关于</string>
+    <string name="title_activity_donate">捐赠</string>
+    
+    
+<!-- Preference Strings -->
+    <string name="pref_phantom_summary">显示下落位置</string>
+    <string name="pref_phantom_title">影子模式</string>
+    
+    <string name="pref_fps_summary">在手速之下显示帧率</string>
+    <string name="pref_fps_title">帧率</string>
+    
+    <string name="pref_popup_summary">成功消行</string>
+    <string name="pref_popup_title">弹出文本</string>
+    
+    <string name="pref_rng_title">方块生成模式</string>
+    <string name="pref_rngs_default">七块随机模式</string>
+    <string name="pref_rng_summary">建议选择七块随机模式（竞技模式使用）</string>
+    <string-array name ="randomizer_preference_array">
+        <item>七块随机模式（标准）</item>
+        <item>普通随机模式</item>
+    </string-array>
+    
+    <string name="softdropspeed_pref_title">软下落速度</string>
+    
+    <string name="movespeed_pref_title">横向速度</string>
+    
+    <string name="soundvolume_pref_title">特效音量</string>
+    
+    <string name="musicvolume_pref_title">音乐音量</string>
+    
+    <string name="pref_vibration_button_title">按钮振动</string>
+    <string name="pref_vibration_button_summary">按下按钮之后振动</string>
+    
+    <string name="pref_vibration_events_title">事件振动</string>
+    <string name="pref_vibration_events_summary">对特定事件发生振动</string>
+    
+<!-- Advanced Preference Strings -->
+    <string name="pref_button_sound_summary">按下游戏按钮的时候提供声音反馈</string>
+    <string name="pref_button_sound_title">按钮声音</string>
+    
+    <string name="pref_fpslimit_summary">减少帧率以节省能耗</string>
+    <string name="pref_fpslimit_title">帧率限制</string>
+    
+    <string name="pref_fpslimittext_summary">要求游戏尽可能保持帧率</string>
+    <string name="pref_fpslimittext_title">目标帧率</string>
+    
+    <string name="pref_vibDurOffset_summary">增加振动的延迟时间（单位位毫秒）</string>
+    <string name="pref_vibDurOffset_title">按钮振动持续时间</string>
+    
+    <string name="pref_antialiasing_summary">增强文本显示效果，若要提升游戏表现，请关闭</string>
+    <string name="pref_antialiasing_title">文本反锯齿</string>
+    
+    <string name="pref_accelerationH_summary">开始横向移动后短暂延迟，适用于新手</string>
+    <string name="pref_accelerationH_title">横向加速</string>
+    
+    <string name="pref_accelerationV_summary">开始纵向移动后短暂延迟，适用于新手</string>
+    <string name="pref_accelerationV_title">软下落加速</string>
+    
+    <string name="pref_layoutswap_summary">交换软下落和硬下落按钮</string>
+    <string name="pref_layoutswap_title">交换下落按钮</string>
+    
+    
+    
+    <string name="pref_version_summary">1.0\n点击此处转向公共代码库</string>
+    <string name="pref_version_title">版本</string>
+    
+    <string name="pref_license_summary">本软件为自由软件，遵循 FSF 的 GNU GPLv3 协议\n点击此处显示此协议的网络版本</string>
+    <string name="pref_license_title">条款</string>
+    
+    <string name="pref_license_music_summary">\"lemmings in love (卡拉OK)\" 以及 \"sad robot (卡拉OK)\" 由 Pornophonique 创作. 基于 CC 共创协议 3.0 (CC BY-NC-SA 3.0).\n点击此处打开艺术家的网站</string>
+    <string name="pref_license_music_title">音乐创作</string>
+    
+    <string name="pref_author_summary">Simon Willeke\n点击此处联系作者以提供建议和反馈</string>
+    <string name="pref_author_title">作者</string>
+    
+    <string name="pref_donate_title">捐赠</string>
+    <string name="pref_donate_summary">如果您感谢此软件的作者，欢迎给以捐赠</string>
+    <string name="donate_button">打开Paypal</string>
+    
+    
+    <string name="pref_category_sound">声音</string>
+    <string name="pref_category_vibration">振动</string>
+    <string name="pref_category_other">其它</string>
+    <string name="pref_category_advanced">高级</string>
+    
+    
+<!-- Help Menu Strings -->
+    <string name="pref_help_scoring_title">分数</string>
+    <string name="pref_help_scoring_summary">游戏如何计分?</string>
+    <string name="pref_help_scoring_message">清除1行加100分，2行加300分，3行加500分，4行加800分；连续4行每次加400分。此外还有奖分，软下落1行加1分，硬下落一行加2分</string>
+    
+    <string name="pref_help_levels_title">局数</string>
+    <string name="pref_help_levels_summary">局是什么意思?</string>
+    <string name="pref_help_levels_message">局体现了游戏的难度。每过一局自动下落速度增加10%，清除10行进入下一局</string>
+    
+    <string name="pref_help_vibration_title">振动</string>
+    <string name="pref_help_vibration_summary">如何用振动获得最佳的触觉反馈?</string>
+    <string name="pref_help_vibration_message">振动功能在一些设备上存在问题，有些设备根本不支持它。如果你的设备支持但是没有注意到它的实现，请增加振动的持续时间。这个设置叫做按钮振动时间，请将这个设置调整到刚好可以感觉到振动的程度</string>
+    
+    <string name="pref_help_apm_title">手速</string>
+    <string name="pref_help_apm_summary">什么是手速?</string>
+    <string name="pref_help_apm_message">手速指的是每分钟动作的次数，用来度量用户手指动作的速度</string>
+    
+    <string name="pref_help_fps_title">帧率</string>
+    <string name="pref_help_fps_summary">帧率是什么？它是用来做什么用的？</string>
+    <string name="pref_help_fps_message">帧率指的是每秒的帧数，即显示画面的更新频率。低帧率对应较慢的反应速度，高帧率则消耗更多的电量。较为平衡的数值为25FPS到35FPS，这个数值可以在高级设置中限定</string>
+    
+    <string name="pref_help_randomizer_title">随机数发生模式</string>
+    <string name="pref_help_randomizer_summary">在高级设置中的两种随机数发生模式有什么区别？</string>
+    <string name="pref_help_randomizer_message">七块随机模式要求同样的块在同一行不可能出现3次，普通随机模式则没有此限制</string>
+    
+    <string name="pref_help_resumability_title">恢复</string>
+    <string name="pref_help_resumability_summary">在什么条件下中断的游戏可以恢复？</string>
+    <string name="pref_help_resumability_message">只要不是手动点击退出按钮或者把程序彻底划掉，就可以恢复</string>
+    
+</resources>

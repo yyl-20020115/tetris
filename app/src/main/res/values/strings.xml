@@ -81,8 +81,10 @@
     
     <string name="pref_vibration_events_title">Event Vibration</string>
     <string name="pref_vibration_events_summary">Vibrates on important game events</string>
-    
-<!-- Advanced Preference Strings -->
+
+    <string name="pref_lines_per_second">\ Lines per Second</string>
+    <string name="pref_squares_per_second">\ Squares per Second</string>
+    <!-- Advanced Preference Strings -->
     <string name="pref_button_sound_summary">Provides auditory feedback when pressing the game buttons</string>
     <string name="pref_button_sound_title">Button Sound</string>
     
@@ -136,8 +138,8 @@
     <string name="pref_category_vibration">VIBRATION</string>
     <string name="pref_category_other">OTHER</string>
     <string name="pref_category_advanced">Advanced</string>
-    <string name="pref_category_layout" translatable="false">LAYOUT</string>
-    
+    <string name="pref_category_layout">Layout</string>
+
     
 <!-- Help Menu Strings -->
     <string name="pref_help_scoring_title">Scoring</string>

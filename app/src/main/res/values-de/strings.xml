@@ -76,8 +76,11 @@
     
     <string name="pref_vibration_events_title">Ereignisvibration</string>
     <string name="pref_vibration_events_summary">Lange Vibration bei wichtigen Spielereignissen</string>
-    
-<!-- Advanced Preference Strings -->
+
+    <string name="pref_lines_per_second">\ Lines per Second</string>
+    <string name="pref_squares_per_second">\ Squares per Second</string>
+
+    <!-- Advanced Preference Strings -->
     <string name="pref_button_sound_summary"></string>
     <string name="pref_button_sound_title">Ton bei Tastendruck</string>
     
@@ -125,9 +128,10 @@
     <string name="pref_category_vibration">VIBRATION</string>
     <string name="pref_category_other">SONSTIGES</string>
     <string name="pref_category_advanced">Erweitert</string>
-    
-    
-<!-- Help Menu Strings -->
+    <string name="pref_category_layout">Layout</string>
+
+
+    <!-- Help Menu Strings -->
     <string name="pref_help_scoring_title">Punkte</string>
     <string name="pref_help_scoring_summary">Wie genau werden die Punkte vergeben?</string>
     <string name="pref_help_scoring_message">Punkte für gesprengte Reihen:\n100 Punkte für 1 Reihe,\n300 Punkte für 2 Reihen,\n500 Punkte für 3 Reihen,\n800 Punkte für 4 Reihen (genannt \"Tetris\").\n\nMehrfache Tetrisse hintereinander geben zusätzliche 400 Bonuspunkte per Tetris.\nZusätzliche Boni gibt es für Soft und Hard Drops. Soft Drops gewähren 1 Punkt je gefallener Reihe, Hard Drops dagegen 2.</string>

@@ -17,7 +17,7 @@
 		        android:max="30"
 		        robobunny:min="1"
 		        robobunny:unitsLeft=""
-		        robobunny:unitsRight=" Lines per Second" />
+		        robobunny:unitsRight="@string/pref_lines_per_second" />
 		    
 		    <CheckBoxPreference 
 		        android:key="pref_accelerationV"
@@ -32,7 +32,7 @@
 		        android:max="20"
 		        robobunny:min="1"
 		        robobunny:unitsLeft=""
-		        robobunny:unitsRight=" Squares per Second" />
+		        robobunny:unitsRight="@string/pref_squares_per_second" />
 		    
 		    <CheckBoxPreference 
 		        android:key="pref_accelerationH"

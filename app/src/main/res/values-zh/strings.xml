@@ -76,8 +76,11 @@
     
     <string name="pref_vibration_events_title">事件振动</string>
     <string name="pref_vibration_events_summary">对特定事件发生振动</string>
-    
-<!-- Advanced Preference Strings -->
+
+    <string name="pref_lines_per_second">\ 行/秒</string>
+    <string name="pref_squares_per_second">\ 块/秒</string>
+
+    <!-- Advanced Preference Strings -->
     <string name="pref_button_sound_summary">按下游戏按钮的时候提供声音反馈</string>
     <string name="pref_button_sound_title">按钮声音</string>
     
@@ -125,9 +128,10 @@
     <string name="pref_category_vibration">振动</string>
     <string name="pref_category_other">其它</string>
     <string name="pref_category_advanced">高级</string>
-    
-    
-<!-- Help Menu Strings -->
+    <string name="pref_category_layout">布局</string>
+
+
+    <!-- Help Menu Strings -->
     <string name="pref_help_scoring_title">分数</string>
     <string name="pref_help_scoring_summary">游戏如何计分?</string>
     <string name="pref_help_scoring_message">清除1行加100分，2行加300分，3行加500分，4行加800分；连续4行每次加400分。此外还有奖分，软下落1行加1分，硬下落一行加2分</string>

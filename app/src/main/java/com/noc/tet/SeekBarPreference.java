@@ -2,6 +2,7 @@
 package com.noc.tet;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.preference.Preference;
 import android.util.AttributeSet;
@@ -73,7 +74,15 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         String value = attrs.getAttributeValue(namespace, name);
         if(value == null)
             value = defaultValue;
-       
+        if(value.startsWith("@")){
+            try {
+                Resources res = this.getContext().getResources();
+                int v = Integer.parseInt(value.substring(1));
+                value = res.getString(v);
+            }catch (Exception ex){
+                value = "";
+            }
+        }
         return value;
     }
    

@@ -58,7 +58,7 @@ dependencies {
     implementation libs.androidx.material3
     //implementation libs.androidx.fragment
     implementation libs.androidx.cursoradapter
-    implementation files('libs\\android-support-v4.jar')
+    implementation files('libs/android-support-v4.jar')
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core

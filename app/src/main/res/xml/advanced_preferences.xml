@@ -54,8 +54,8 @@
 		    
 		    <EditTextPreference
 		        android:dialogMessage="@string/pref_fpslimittext_summary"
-		        android:positiveButtonText="OK"
-		        android:negativeButtonText="Cancel"
+		        android:positiveButtonText="@string/OK"
+		        android:negativeButtonText="@string/Cancel"
 		        android:dependency="pref_fpslimit"
 		        android:numeric="integer"
 		        android:key="pref_fpslimittext"

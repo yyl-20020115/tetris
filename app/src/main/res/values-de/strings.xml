@@ -38,14 +38,21 @@
     <string name="highscore_title">Highscores</string>
     
     <string name="musicAuthorNote">Musik von Pornophonique</string>
-    
-    
+    <string name="clear">löschen</string>
+
+
     <string name="title_activity_settings">Einstellungen</string>
     <string name="title_activity_about">Über Blockinger</string>
     <string name="title_activity_donate">Spenden</string>
-    
-    
-<!-- Preference Strings -->
+
+    <string name="confirm">Confirm</string>
+    <string name="confirm_to_clear">Clear high scores?</string>
+
+    <string name="ms">\ ms</string>
+    <string name="OK">OK</string>
+    <string name="Cancel">Cancel</string>
+
+    <!-- Preference Strings -->
     <string name="pref_phantom_summary">Zeigt dort einen Schatten, wo das aktive Tetrimino landen wird</string>
     <string name="pref_phantom_title">Phantom</string>
     
@@ -81,7 +88,7 @@
     <string name="pref_squares_per_second">\ Squares per Second</string>
 
     <!-- Advanced Preference Strings -->
-    <string name="pref_button_sound_summary"></string>
+    <string name="pref_button_sound_summary">Summary</string>
     <string name="pref_button_sound_title">Ton bei Tastendruck</string>
     
     <string name="pref_fpslimit_summary">Reduziert den Energieverbrauch deutlich aber kann das Spiel verlangsamen</string>

@@ -220,7 +220,7 @@ public class GameActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
     	super.onDestroy();
-    	game.setSongtime(sound.getSongtime());
+    	game.setSongTime(sound.getSongtime());
     	sound.release();
     	sound = null;
     	game.disconnect();

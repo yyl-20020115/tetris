@@ -40,12 +40,29 @@ public class ScoreDataSource {
 	    cursor.close();
 	    return newScore;
 	  }
+	  public int getCount(){
+		  String countQuery = "SELECT COUNT(*) FROM " + HighScoreOpenHelper.TABLE_HIGH_SCORES;
+		  Cursor cursor = this.database.rawQuery(countQuery, null);
+		  int count = 0;
+
+		  if (cursor.moveToFirst()) {
+			  count = cursor.getInt(0);
+		  }
+
+		  cursor.close();
+		  return count;
+	  }
 
 	  public void deleteScore(Score score) {
 	    long id = score.getId();
 	    //System.out.println("Comment deleted with id: " + id);
 	    database.delete(HighScoreOpenHelper.TABLE_HIGH_SCORES, HighScoreOpenHelper.COLUMN_ID
 	        + " = " + id, null);
+	  }
+
+	  public void deleteAllScores(){
+		  int ret = database.delete(HighScoreOpenHelper.TABLE_HIGH_SCORES,"",new String[0]);
+		  ret = 0;
 	  }
 
 	  private Score cursorToScore(Cursor cursor) {

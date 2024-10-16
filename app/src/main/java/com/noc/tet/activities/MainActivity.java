@@ -1,8 +1,10 @@
 package com.noc.tet.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -28,6 +30,7 @@ import com.noc.tet.db.HighScoreOpenHelper;
 import com.noc.tet.db.ScoreDataSource;
 
 import java.util.Locale;
+import java.util.TimeZone;
 
 
 public class MainActivity extends ListActivity {
@@ -52,6 +55,7 @@ public class MainActivity extends ListActivity {
 	private View dialogView;
 	private SeekBar leveldialogBar;
 	private TextView leveldialogtext;
+	private ConfirmClearDialogFragment clearDialog;
 	private Sound sound;
 	private void setupLocale(Context context){
 		Resources resources = context.getResources();
@@ -74,10 +78,12 @@ public class MainActivity extends ListActivity {
 
 		resources.updateConfiguration(conf, dm);
 	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setupLocale(this);
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		setContentView(R.layout.activity_main);
 		PreferenceManager.setDefaultValues(this, R.xml.simple_preferences, true);
 		PreferenceManager.setDefaultValues(this, R.xml.advanced_preferences, true);
@@ -85,7 +91,8 @@ public class MainActivity extends ListActivity {
 		/* Create Music */
 		sound = new Sound(this);
 		sound.startMusic(Sound.MENU_MUSIC, 0);
-		
+		this.clearDialog = new ConfirmClearDialogFragment();
+
 		/* Database Management */
 		Cursor mc;
 	    datasource = new ScoreDataSource(this);
@@ -103,8 +110,8 @@ public class MainActivity extends ListActivity {
 	    setListAdapter(adapter);
 	    
 	    /* Create Startlevel Dialog */
-	    startLevel = 0;
-	    startLevelDialog = new AlertDialog.Builder(this);
+		startLevel = 0;
+		startLevelDialog = new AlertDialog.Builder(this);
 		startLevelDialog.setTitle(R.string.startLevelDialogTitle);
 		startLevelDialog.setCancelable(false);
 		startLevelDialog.setNegativeButton(R.string.startLevelDialogCancel, (dialog, which) -> dialog.dismiss());
@@ -121,6 +128,9 @@ public class MainActivity extends ListActivity {
             i.setData(Uri.parse(url));
             startActivity(i);
         });
+
+		this.findViewById(R.id.clear).setEnabled(this.datasource.getCount()>0);
+
 	}
 
 	@Override
@@ -165,6 +175,8 @@ public class MainActivity extends ListActivity {
 		b.putString("playername", ((TextView)findViewById(R.id.nicknameEditView)).getText().toString()); //Your id
 		intent.putExtras(b); //Put your id to your next Intent
 		startActivityForResult(intent,SCORE_REQUEST);
+		this.findViewById(R.id.clear).setEnabled(true);
+
 	}
 	
 	@Override
@@ -181,6 +193,36 @@ public class MainActivity extends ListActivity {
 	    datasource.createScore(score, playerName);
 	}
 
+	public void onClickClear(View view){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.confirm);
+		builder.setMessage(
+				getResources().getString(R.string.confirm_to_clear)
+		);
+		builder.setPositiveButton(R.string.OK, (dialogInterface, i) ->
+		{
+			this.datasource.deleteAllScores();
+			Cursor mc;
+			mc = datasource.getCursor();
+			// Use the SimpleCursorAdapter to show the
+			// elements in a ListView
+			this.adapter = new SimpleCursorAdapter(
+					this,
+					R.layout.blockinger_list_item,
+					mc,
+					new String[] {HighScoreOpenHelper.COLUMN_SCORE, HighScoreOpenHelper.COLUMN_PLAYER_NAME},
+					new int[] {R.id.text1, R.id.text2},
+					SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+			this.setListAdapter(adapter);
+			this.findViewById(R.id.clear).setEnabled(false);
+		});
+		builder.setNegativeButton(R.string.Cancel,(dialogInterface, i) -> {
+
+		});
+		Dialog dialog = builder.create();
+
+		dialog.show();
+	}
 
     public void onClickStart(View view) {
 		dialogView = getLayoutInflater().inflate(R.layout.seek_bar_dialog, null);

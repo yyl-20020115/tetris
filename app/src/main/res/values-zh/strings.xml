@@ -34,18 +34,25 @@
     <string name="scoreLabel">分数:</string>
     <string name="timeLabel">时间:</string>
     <string name="apmLabel">手速:</string>
-    <string name="hint">提升：本游戏可以横屏也可以竖屏</string>
+    <string name="hint">提示：本游戏可以横屏也可以竖屏</string>
     <string name="highscore_title">高分榜</string>
-    
+
+    <string name="confirm">确认</string>
+    <string name="confirm_to_clear">确定清除高分榜吗?</string>
+
+    <string name="clear">清除</string>
     <string name="musicAuthorNote">作曲 Pornophonique</string>
     
     
     <string name="title_activity_settings">设置</string>
     <string name="title_activity_about">关于</string>
     <string name="title_activity_donate">捐赠</string>
-    
-    
-<!-- Preference Strings -->
+
+    <string name="ms">\ 毫秒</string>
+    <string name="OK">确定</string>
+    <string name="Cancel">取消</string>
+
+    <!-- Preference Strings -->
     <string name="pref_phantom_summary">显示下落位置</string>
     <string name="pref_phantom_title">影子模式</string>
     
@@ -90,7 +97,7 @@
     <string name="pref_fpslimittext_summary">要求游戏尽可能保持帧率</string>
     <string name="pref_fpslimittext_title">目标帧率</string>
     
-    <string name="pref_vibDurOffset_summary">增加振动的延迟时间（单位位毫秒）</string>
+    <string name="pref_vibDurOffset_summary">增加振动的延迟时间（单位为毫秒）</string>
     <string name="pref_vibDurOffset_title">按钮振动持续时间</string>
     
     <string name="pref_antialiasing_summary">增强文本显示效果，若要提升游戏表现，请关闭</string>

@@ -15,7 +15,7 @@ import android.preference.PreferenceManager;
 
 public class GameState extends Component {
 
-	public final static int state_startable = 0;
+	public final static int state_init = 0;
 	public final static int state_running = 1;
 	public final static int state_paused = 2;
 	public final static int state_finished = 3;
@@ -76,8 +76,9 @@ public class GameState extends Component {
 		super(ga);
 		actions = 0;
 		board = new Board(host);
-		date = new GregorianCalendar();
-		formatter = new SimpleDateFormat("HH:mm:ss",Locale.US);
+		date = new GregorianCalendar(Locale.getDefault());
+		formatter = new SimpleDateFormat("HH:mm:ss",Locale.getDefault());
+
 		date.setTimeInMillis(60000);
 		if(formatter.format(date.getTime()).startsWith("23"))
 			hourOffset = 1;
@@ -149,7 +150,7 @@ public class GameState extends Component {
 
 		//paused = true;
 		//restartMe = false;
-		stateOfTheGame = state_startable;
+		stateOfTheGame = state_init;
 		scheduleSpawn = false;
 		spawnTime = 0;
 	}
@@ -457,7 +458,7 @@ public class GameState extends Component {
 		return !instance.isResumable();
 	}
 
-	public void setSongtime(int songtime) {
+	public void setSongTime(int songtime) {
 		this.songtime = songtime;
 	}
 

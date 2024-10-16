@@ -18,6 +18,9 @@ import android.view.MenuItem;
 
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener, OnPreferenceClickListener {
 
+	private String add_ms(String timeString){
+		return timeString + this.getString(R.string.ms);// " ms";
+	}
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	@Override
@@ -41,7 +44,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         String timeString = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_vibDurOffset", "");
         if(timeString.isEmpty())
         	timeString = "0";
-        timeString = timeString + " ms";
+        timeString = add_ms(timeString);
         pref.setSummary(timeString);
 	}
 
@@ -56,7 +59,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             String timeString = sharedPreferences.getString(key, "");
             if(timeString.isEmpty())
             	timeString = "0";
-            timeString = timeString + " ms";
+			timeString = add_ms(timeString);
             connectionPref.setSummary(timeString);
         }
 	}

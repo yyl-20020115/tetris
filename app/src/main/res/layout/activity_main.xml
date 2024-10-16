@@ -45,6 +45,13 @@
             android:layout_weight="1"
             android:contentDescription="@string/highscoreListDescription" >
         </ListView>
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="match_parent"
+            android:text="@string/clear"
+            android:layout_height="48dp"
+            android:onClick="onClickClear"
+            />
 
         <View
             android:id="@+id/hdivider"
@@ -105,10 +112,10 @@
             android:layout_weight="1"
             android:onClick="onClickStart"
             android:text="@string/startButtonString"
-            android:textColor="@color/square_error" 
+            android:textColor="@color/square_error"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColorHint="@color/holo_grey" />
-        
+
     </LinearLayout>
 
     <TextView

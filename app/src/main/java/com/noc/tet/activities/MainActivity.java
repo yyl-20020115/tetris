@@ -55,7 +55,6 @@ public class MainActivity extends ListActivity {
 	private View dialogView;
 	private SeekBar leveldialogBar;
 	private TextView leveldialogtext;
-	private ConfirmClearDialogFragment clearDialog;
 	private Sound sound;
 	private void setupLocale(Context context){
 		Resources resources = context.getResources();
@@ -91,7 +90,6 @@ public class MainActivity extends ListActivity {
 		/* Create Music */
 		sound = new Sound(this);
 		sound.startMusic(Sound.MENU_MUSIC, 0);
-		this.clearDialog = new ConfirmClearDialogFragment();
 
 		/* Database Management */
 		Cursor mc;

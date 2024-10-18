@@ -14,7 +14,6 @@ import android.preference.PreferenceManager;
 
 
 public class GameState extends Component {
-
     public final static int state_init = 0;
     public final static int state_running = 1;
     public final static int state_paused = 2;
@@ -28,7 +27,6 @@ public class GameState extends Component {
     private final GregorianCalendar date;
     private final SimpleDateFormat formatter;
     public int hourOffset;
-
     // Game State
     private String playerName;
     private int activeIndex, previewIndex;
@@ -228,12 +226,7 @@ public class GameState extends Component {
         //consecutiveBonusScore += addScore;
         if (cleared > 0) {
             /* HardDrop/SoftDrop Boni: we comply to Tetrisfriends rules now */
-            if (playerHardDrop) {
-                addScore += hardDropDistance * hardDropBonus;
-                //addScore = (int)((float)addScore* (1.0f + ((float)hardDropDistance/(float)hardDropBonusFactor)));
-            } else {
-                addScore += softDropDistance * softDropBonus;
-            }
+            addScore += (playerHardDrop?((long) hardDropDistance * hardDropBonus):((long) softDropDistance * softDropBonus));
         }
         score += addScore;// + tempBonus;
         if (addScore != 0)
@@ -317,7 +310,7 @@ public class GameState extends Component {
     }
 
     public String getTimeString() {
-        date.setTimeInMillis(gameTime + hourOffset * (3600000));
+        date.setTimeInMillis(gameTime + hourOffset * (3600000L));
         return formatter.format(date.getTime());
     }
 

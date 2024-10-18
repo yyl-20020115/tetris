@@ -32,7 +32,7 @@ public class ScoreDataSource {
         dbHelper.close();
     }
 
-    public Score createScore(long score, int level, int apm, String time, String playerName) {
+    public void createScore(long score, int level, int apm, String time, String playerName) {
         ContentValues values = new ContentValues();
         values.put(HighScoreOpenHelper.COLUMN_SCORE, score);
         values.put(HighScoreOpenHelper.COLUMN_PLAYER_NAME, playerName);
@@ -45,9 +45,8 @@ public class ScoreDataSource {
                 allColumns, HighScoreOpenHelper.COLUMN_ID + " = " + insertId, null,
                 null, null, HighScoreOpenHelper.COLUMN_SCORE + " DESC");
         cursor.moveToFirst();
-        Score newScore = cursorToScore(cursor);
+        cursorToScore(cursor);
         cursor.close();
-        return newScore;
     }
 
     public int getCount() {
@@ -71,11 +70,10 @@ public class ScoreDataSource {
     }
 
     public void deleteAllScores() {
-        int ret = database.delete(HighScoreOpenHelper.TABLE_HIGH_SCORES, "", new String[0]);
-        ret = 0;
+        database.delete(HighScoreOpenHelper.TABLE_HIGH_SCORES, "", new String[0]);
     }
 
-    private Score cursorToScore(Cursor cursor) {
+    private void cursorToScore(Cursor cursor) {
         Score score = new Score();
         score.setId(cursor.getLong(0));
         score.setScore(cursor.getLong(1));
@@ -83,7 +81,6 @@ public class ScoreDataSource {
         score.setLevel(cursor.getInt(3));
         score.setApm(cursor.getInt(4));
         score.setTime(cursor.getString(5));
-        return score;
     }
 
     public Cursor getCursor() {

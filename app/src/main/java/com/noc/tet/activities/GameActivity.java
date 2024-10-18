@@ -2,14 +2,12 @@ package com.noc.tet.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Window;
-
-import androidx.annotation.RequiresApi;
 
 import com.noc.tet.BlockBoardView;
 import com.noc.tet.R;
@@ -59,7 +57,8 @@ public class GameActivity extends FragmentActivity {
 
             if ((value == NEW_GAME)) {
                 game = GameState.getNewInstance(this);
-                game.setLevel(b.getInt("level"));
+                if(b!=null)
+                    game.setLevel(b.getInt("level"));
             } else
                 game = GameState.getInstance(this);
         }
@@ -74,7 +73,7 @@ public class GameActivity extends FragmentActivity {
             sound.startMusic(Sound.GAME_MUSIC, game.getSongtime());
         sound.loadEffects();
         if (b != null) {
-            value = b.getInt("mode");
+            b.getInt("mode");
             if (b.getString("playername") != null)
                 game.setPlayerName(b.getString("playername"));
         } else
@@ -158,6 +157,62 @@ public class GameActivity extends FragmentActivity {
         ((BlockBoardView) findViewById(R.id.boardView)).setHost(this);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                controls.downButtonPressed();
+                return true;
+            case KeyEvent.KEYCODE_Z:
+                controls.dropButtonPressed();
+                return true;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                controls.leftButtonPressed();
+                return true;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                controls.rightButtonPressed();
+                return true;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                controls.rotateLeftPressed();
+                return true;
+            case KeyEvent.KEYCODE_X:
+                controls.rotateRightPressed();
+                return true;
+            default:
+                break;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                controls.downButtonReleased();
+                return true;
+            case KeyEvent.KEYCODE_Z:
+                controls.dropButtonReleased();
+                return true;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                controls.leftButtonReleased();
+                return true;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                controls.rightButtonReleased();
+                return true;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                controls.rotateLeftReleased();
+                return true;
+            case KeyEvent.KEYCODE_X:
+                controls.rotateRightReleased();
+                return true;
+            default:
+                break;
+        }
+
+        return super.onKeyUp(keyCode, event);
+    }
+
     /**
      * Called by BlockBoardView upon completed creation
      */
@@ -188,7 +243,6 @@ public class GameActivity extends FragmentActivity {
     /**
      * Called by GameState upon Defeat
      */
-    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void putScore(long score, int level, int apm, String time) {
         String playerName = game.getPlayerName();
         if (playerName == null || playerName.isEmpty())

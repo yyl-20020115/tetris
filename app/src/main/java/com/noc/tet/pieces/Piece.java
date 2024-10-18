@@ -157,9 +157,7 @@ public abstract class Piece {
      * @return true if drop was successfull. Otherwise the ground or other pieces was hit.
      */
     public boolean drop(Board board) {
-        if (!active)
-            return true;
-        return setPosition(x, y + 1, false, board);
+        return !active || setPosition(x, y + 1, false, board);
     }
 
     public int hardDrop(boolean noInterrupt, Board board) {
@@ -202,9 +200,6 @@ public abstract class Piece {
      *
      * @param xOffset board x offset
      * @param yOffset board y offset
-     * @param
-     * @param c
-     * @param
      */
     public void drawOnBoard(int xOffset, int yOffset, int ss, Canvas c) {
         if (!active)

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.media.AudioManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -30,11 +29,9 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 
         addPreferencesFromResource(R.xml.simple_preferences);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            ActionBar actionBar = getActionBar();
-            assert actionBar != null;
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        ActionBar actionBar = getActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
@@ -58,7 +55,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             Preference connectionPref = findPreference(key);
             // Set summary to be the user-description for the selected value
             String timeString = sharedPreferences.getString(key, "");
-            if (timeString.length() == 0)
+            if (timeString.isEmpty())
                 timeString = "0";
             timeString = add_ms(timeString);
             connectionPref.setSummary(timeString);

@@ -7,10 +7,6 @@ import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 
 public class WorkThread extends Thread {
-     
-    /**
-	 * 
-	 */
 	private final SurfaceHolder surfaceHolder;
     private boolean runFlag = false;
     boolean firstTime = true;
@@ -29,6 +25,7 @@ public class WorkThread extends Thread {
         } catch(NumberFormatException e) {
         	fpslimit = 25;
         }
+
 		if(fpslimit < 5)
         	fpslimit = 5;
 		lastDelay = 100;
@@ -108,7 +105,6 @@ public class WorkThread extends Thread {
 	                    host.display.doDraw(c, frames);
 	                }
 	            } finally {
-	               
 	                if (c != null) {
 	                    this.surfaceHolder.unlockCanvasAndPost(c);
 	                    

@@ -9,7 +9,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -33,11 +32,9 @@ import java.util.TimeZone;
 
 
 public class MainActivity extends ListActivity {
-
     public static final int SCORE_REQUEST = 0x0;
-
     /**
-     * This key is used to access the player name, which is returned as an Intent from the gameactivity upon completion (gameover).
+     * This key is used to access the player name, which is returned as an Intent from the game activity upon completion (game over).
      * The Package Prefix is mandatory for Intent data
      */
     public static final String PLAYER_NAME_KEY = "com.noc.tet.activities.playername";
@@ -58,6 +55,7 @@ public class MainActivity extends ListActivity {
     private View dialogView;
     private SeekBar leveldialogBar;
     private TextView leveldialogtext;
+    private TextView textViewTopic;
     private Sound sound;
 
     private void setupLocale(Context context) {
@@ -65,15 +63,9 @@ public class MainActivity extends ListActivity {
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration conf = resources.getConfiguration();
         Locale sysLocale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            sysLocale = resources.getConfiguration().getLocales().get(0);
-        } else {
-            sysLocale = resources.getConfiguration().locale;
-        }
+        sysLocale = resources.getConfiguration().getLocales().get(0);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            conf.setLocale(sysLocale);
-        }
+        conf.setLocale(sysLocale);
 
         resources.updateConfiguration(conf, dm);
     }
@@ -132,6 +124,15 @@ public class MainActivity extends ListActivity {
 
         this.findViewById(R.id.clear).setEnabled(this.datasource.getCount() > 0);
 
+        this.textViewTopic= findViewById(R.id.textViewTopic);
+        int count = datasource.getCount();
+        String builder = String.valueOf(this.getResources().getText(R.string.highscoreListDescription)) +
+                '(' +
+                count +
+                ')';
+
+        this.textViewTopic.setText(builder);
+
     }
 
     @Override
@@ -152,9 +153,9 @@ public class MainActivity extends ListActivity {
             Intent intent1 = new Intent(this, AboutActivity.class);
             startActivity(intent1);
             return true;
-        } else if (id == R.id.action_donate) {
-            donateDialog.show();
-            return true;
+//        } else if (id == R.id.action_donate) {
+//            donateDialog.show();
+//            return true;
         } else if (id == R.id.action_help) {
             Intent intent2 = new Intent(this, HelpActivity.class);
             startActivity(intent2);
@@ -195,6 +196,30 @@ public class MainActivity extends ListActivity {
 
         datasource.open();
         datasource.createScore(score, level, apm, time, playerName);
+        Cursor mc;
+        mc = datasource.getCursor();
+        // Use the SimpleCursorAdapter to show the
+        // elements in a ListView
+        this.adapter = new SimpleCursorAdapter(
+                this,
+                R.layout.blockinger_list_item,
+                mc,
+                new String[]{
+                        HighScoreOpenHelper.COLUMN_SCORE,
+                        HighScoreOpenHelper.COLUMN_PLAYER_NAME,
+                        HighScoreOpenHelper.COLUMN_LEVEL,
+                        HighScoreOpenHelper.COLUMN_APM,
+                        HighScoreOpenHelper.COLUMN_TIME},
+                new int[]{R.id.text1, R.id.text2, R.id.text3, R.id.text4, R.id.text5},
+                SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        this.setListAdapter(adapter);
+        int count = datasource.getCount();
+        String builder = String.valueOf(this.getResources().getText(R.string.highscoreListDescription)) +
+                '(' +
+                count +
+                ')';
+
+        this.textViewTopic.setText(builder);
     }
 
     public void onClickClear(View view) {
@@ -214,17 +239,28 @@ public class MainActivity extends ListActivity {
                     this,
                     R.layout.blockinger_list_item,
                     mc,
-                    new String[]{HighScoreOpenHelper.COLUMN_SCORE, HighScoreOpenHelper.COLUMN_PLAYER_NAME},
-                    new int[]{R.id.text1, R.id.text2},
+                    new String[]{
+                            HighScoreOpenHelper.COLUMN_SCORE,
+                            HighScoreOpenHelper.COLUMN_PLAYER_NAME,
+                            HighScoreOpenHelper.COLUMN_LEVEL,
+                            HighScoreOpenHelper.COLUMN_APM,
+                            HighScoreOpenHelper.COLUMN_TIME},
+                    new int[]{R.id.text1, R.id.text2, R.id.text3, R.id.text4, R.id.text5},
                     SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
             this.setListAdapter(adapter);
             this.findViewById(R.id.clear).setEnabled(false);
+            int count = 0;
+            String builder2 = String.valueOf(this.getResources().getText(R.string.highscoreListDescription)) +
+                    '(' +
+                    count +
+                    ')';
+
+            this.textViewTopic.setText(builder2);
         });
         builder.setNegativeButton(R.string.Cancel, (dialogInterface, i) -> {
 
         });
         Dialog dialog = builder.create();
-
         dialog.show();
     }
 
@@ -233,10 +269,9 @@ public class MainActivity extends ListActivity {
         leveldialogtext = dialogView.findViewById(R.id.leveldialogleveldisplay);
         leveldialogBar = dialogView.findViewById(R.id.levelseekbar);
         leveldialogBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-
             @Override
             public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
-                leveldialogtext.setText("" + arg1);
+                leveldialogtext.setText(String.format("%d", arg1));
                 startLevel = arg1;
             }
 
@@ -250,7 +285,7 @@ public class MainActivity extends ListActivity {
 
         });
         leveldialogBar.setProgress(startLevel);
-        leveldialogtext.setText("" + startLevel);
+        leveldialogtext.setText(String.format("%d", startLevel));
         startLevelDialog.setView(dialogView);
         startLevelDialog.show();
     }
@@ -295,7 +330,6 @@ public class MainActivity extends ListActivity {
         datasource.open();
         Cursor cursor = datasource.getCursor();
         adapter.changeCursor(cursor);
-
         if (!GameState.isFinished()) {
             findViewById(R.id.resumeButton).setEnabled(true);
             ((Button) findViewById(R.id.resumeButton)).setTextColor(getResources().getColor(R.color.square_error));

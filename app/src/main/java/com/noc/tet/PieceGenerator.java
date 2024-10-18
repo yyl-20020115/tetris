@@ -18,10 +18,7 @@ public class PieceGenerator {
 			bag[i] = i;
 		
 		random = new Random(System.currentTimeMillis());
-		if(start== START_RANDOM)
-			this.strategy = START_RANDOM;
-		else
-			this.strategy = START_7BAG;
+        this.strategy = start == START_RANDOM ? START_RANDOM : START_7BAG;
 		
 		// Fill initial Bag
 		for(int i = 0; i < 6; i++) {

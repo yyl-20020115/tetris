@@ -57,7 +57,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             Preference connectionPref = findPreference(key);
             // Set summary to be the user-description for the selected value
             String timeString = sharedPreferences.getString(key, "");
-            if(timeString.isEmpty())
+			if(timeString.isEmpty())
             	timeString = "0";
 			timeString = add_ms(timeString);
             connectionPref.setSummary(timeString);

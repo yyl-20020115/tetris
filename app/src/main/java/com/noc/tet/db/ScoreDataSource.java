@@ -11,9 +11,14 @@ public class ScoreDataSource {
 	// Database fields
 	  private SQLiteDatabase database;
 	  private final HighScoreOpenHelper dbHelper;
-	  private final String[] allColumns = { HighScoreOpenHelper.COLUMN_ID,
+	  private final String[] allColumns = {
+			  HighScoreOpenHelper.COLUMN_ID,
 			  HighScoreOpenHelper.COLUMN_SCORE,
-			  HighScoreOpenHelper.COLUMN_PLAYER_NAME};
+			  HighScoreOpenHelper.COLUMN_PLAYER_NAME,
+			  HighScoreOpenHelper.COLUMN_LEVEL,
+			  HighScoreOpenHelper.COLUMN_APM,
+			  HighScoreOpenHelper.COLUMN_TIME
+	  };
 
 	  public ScoreDataSource(Context context) {
 	    dbHelper = new HighScoreOpenHelper(context);
@@ -27,10 +32,14 @@ public class ScoreDataSource {
 	    dbHelper.close();
 	  }
 
-	  public Score createScore(long score, String playerName) {
+	  public Score createScore(long score, int level, int apm, String time, String playerName) {
 	    ContentValues values = new ContentValues();
 	    values.put(HighScoreOpenHelper.COLUMN_SCORE, score);
-	    values.put(HighScoreOpenHelper.COLUMN_PLAYER_NAME, playerName);
+		values.put(HighScoreOpenHelper.COLUMN_PLAYER_NAME, playerName);
+		values.put(HighScoreOpenHelper.COLUMN_LEVEL,level);
+		values.put(HighScoreOpenHelper.COLUMN_APM,apm);
+		values.put(HighScoreOpenHelper.COLUMN_TIME,time);
+
 	    long insertId = database.insert(HighScoreOpenHelper.TABLE_HIGH_SCORES, null, values);
 	    Cursor cursor = database.query(HighScoreOpenHelper.TABLE_HIGH_SCORES,
 	        allColumns, HighScoreOpenHelper.COLUMN_ID + " = " + insertId, null,
@@ -70,6 +79,9 @@ public class ScoreDataSource {
 		  score.setId(cursor.getLong(0));
 		  score.setScore(cursor.getLong(1));
 		  score.setName(cursor.getString(2));
+		  score.setLevel(cursor.getInt(3));
+		  score.setApm(cursor.getInt(4));
+		  score.setTime(cursor.getString(5));
 	    return score;
 	  }
 

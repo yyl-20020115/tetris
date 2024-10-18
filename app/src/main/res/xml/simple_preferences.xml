@@ -56,8 +56,8 @@
 		    
 	    <EditTextPreference
 	        android:dialogMessage="@string/pref_vibDurOffset_summary"
-	        android:positiveButtonText="OK"
-	        android:negativeButtonText="Cancel"
+	        android:positiveButtonText="@string/OK"
+	        android:negativeButtonText="@string/Cancel"
 	        android:key="pref_vibDurOffset"
 	        android:numeric="integer"
 	        android:title="@string/pref_vibDurOffset_title"

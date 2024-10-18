@@ -81,7 +81,7 @@ public class GameActivity extends FragmentActivity {
 			game.setPlayerName(getResources().getString(R.string.anonymous));
 		dialog.setCancelable(false);
 		if(!game.isResumable())
-			gameOver(game.getScore(), game.getTimeString(), game.getAPM());
+			gameOver(game.getScore(),game.getLevel(), game.getAPM(), game.getTimeString());
 		
 		/* Register Button callback Methods */
 		findViewById(R.id.pausebutton_1).setOnClickListener(arg0 -> GameActivity.this.finish());
@@ -189,7 +189,7 @@ public class GameActivity extends FragmentActivity {
 	 * Called by GameState upon Defeat
      */
 	@RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
-	public void putScore(long score) {
+	public void putScore(long score,int level, int apm, String time) {
 		String playerName = game.getPlayerName();
 		if(playerName == null || playerName.isEmpty())
 			playerName = getResources().getString(R.string.anonymous);//"Anonymous";
@@ -197,6 +197,10 @@ public class GameActivity extends FragmentActivity {
 		Intent data = new Intent();
 		data.putExtra(MainActivity.PLAYER_NAME_KEY, playerName);
 		data.putExtra(MainActivity.SCORE_KEY, score);
+		data.putExtra(MainActivity.LEVEL_KEY, level);
+		data.putExtra(MainActivity.APM_KEY, apm);
+		data.putExtra(MainActivity.TIME_KEY, time);
+
 		setResult(MainActivity.RESULT_OK, data);
 		
 		finish();
@@ -250,8 +254,8 @@ public class GameActivity extends FragmentActivity {
         return game;
     }
 	
-	public void gameOver(long score, String gameTime, int apm) {
-		dialog.setData(score, gameTime, apm);
+	public void gameOver(long score, int level, int apm, String gameTime) {
+		dialog.setData(score,level, apm, gameTime);
 		dialog.show(getSupportFragmentManager(), "hamster");
 	}
 

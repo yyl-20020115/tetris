@@ -14,6 +14,10 @@ public class DefeatDialogFragment extends DialogFragment {
 	private CharSequence timeString;
 	private CharSequence apmString;
 	private long score;
+
+	private int level;
+	private int apm;
+	private String time;
 	
 	public DefeatDialogFragment() {
 		super();
@@ -22,11 +26,12 @@ public class DefeatDialogFragment extends DialogFragment {
 		apmString = "unknown";
 	}
 	
-	public void setData(long scoreArg, String time, int apm) {
+	public void setData(long scoreArg, int level, int apm, String time) {
 		scoreString = String.valueOf(scoreArg);
-		timeString = time;
-		apmString = String.valueOf(apm);
+		timeString = this.time = time;
+		apmString = String.valueOf(this.apm = apm);
 		score = scoreArg;
+		this.level=level;
 	}
 	
 	@Override
@@ -43,7 +48,8 @@ public class DefeatDialogFragment extends DialogFragment {
 				getResources().getString(R.string.hint)
 				);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-			builder.setNeutralButton(R.string.defeatDialogReturn, (dialog, which) -> ((GameActivity)getActivity()).putScore(score));
+			builder.setNeutralButton(R.string.defeatDialogReturn,
+					(dialog, which) -> ((GameActivity)getActivity()).putScore(score,level, apm,time));
 		}
 		return builder.create();
 	}

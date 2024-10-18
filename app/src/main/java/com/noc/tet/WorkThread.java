@@ -23,7 +23,8 @@ public class WorkThread extends Thread {
     public WorkThread(GameActivity ga, SurfaceHolder sh) {
 		host = ga;
 		this.surfaceHolder = sh;
-        try {
+        try
+		{
         	fpslimit = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(host).getString("pref_fpslimittext", "35"));
         } catch(NumberFormatException e) {
         	fpslimit = 25;
@@ -56,7 +57,8 @@ public class WorkThread extends Thread {
 	            /* FPS CONTROL */
 	            tempTime = System.currentTimeMillis();
 	            
-	            try {
+	            try
+				{
 	            	fpslimit = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(host).getString("pref_fpslimittext", "35"));
 	            } catch(NumberFormatException e) {
 	            	fpslimit = 35;
@@ -64,7 +66,8 @@ public class WorkThread extends Thread {
 	            if(fpslimit < 5)
 	            	fpslimit = 5;
 	            
-	            if(PreferenceManager.getDefaultSharedPreferences(host).getBoolean("pref_fpslimit", false)) {
+	            if(PreferenceManager.getDefaultSharedPreferences(host).getBoolean("pref_fpslimit", false))
+				{
 		            lastFrameDuration = tempTime - lastFrameStartingTime;
 		            if(lastFrameDuration > (1000.0f/fpslimit))
 		            	lastDelay = Math.max(0, lastDelay - 25);

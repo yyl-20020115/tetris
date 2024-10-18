@@ -14,7 +14,6 @@ import android.media.SoundPool;
 import android.preference.PreferenceManager;
 
 public class Sound implements OnAudioFocusChangeListener {
-
 	private Activity host;
 	private AudioManager audioCEO;
 	private int soundID_tetrisSoundPlayer;
@@ -25,9 +24,9 @@ public class Sound implements OnAudioFocusChangeListener {
 	private MediaPlayer musicPlayer;
 	private boolean noFocus;
 	private boolean isMusicReady;
-	private BroadcastReceiver noisyAudioStreamReceiver;
-	private BroadcastReceiver ringerModeReceiver;
-	private BroadcastReceiver headsetPlugReceiver;
+	private final BroadcastReceiver noisyAudioStreamReceiver;
+	private final BroadcastReceiver ringerModeReceiver;
+	private final BroadcastReceiver headsetPlugReceiver;
 	private SoundPool soundPool;
 	private int songtime;
 	private int musicType;
@@ -128,10 +127,7 @@ public class Sound implements OnAudioFocusChangeListener {
 		                AudioManager.STREAM_MUSIC,
 		                // Request permanent focus.
 		                AudioManager.AUDIOFOCUS_GAIN);
-			if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-				noFocus = false;
-			} else
-				noFocus = true;
+            noFocus = result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
 		}
 	}
 
@@ -148,7 +144,6 @@ public class Sound implements OnAudioFocusChangeListener {
 	}
 	
 	public void loadMusic(int type, int startTime) {
-		
 		/* Reset previous Music */
 		isMusicReady = false;
 		if(musicPlayer != null)
@@ -192,13 +187,11 @@ public class Sound implements OnAudioFocusChangeListener {
 			return;
 		if(isInactive)
 			return;
-		
-		if(isMusicReady) {
-			/* NOP */
-		} else {
-			loadMusic(type,startTime);
-		}
-		if(isMusicReady) {
+
+        if (!isMusicReady) {
+            loadMusic(type,startTime);
+        }
+        if(isMusicReady) {
 			if(audioCEO.getRingerMode() != AudioManager.RINGER_MODE_NORMAL)
 				return;
 			
@@ -331,11 +324,11 @@ public class Sound implements OnAudioFocusChangeListener {
 	@Override
 	public void onAudioFocusChange(int focusChange) {
         if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
-        	noFocus = true;
-    		if(musicPlayer != null) {
+			noFocus = true;
+			if(musicPlayer != null) {
     			try{
     				musicPlayer.setVolume(0.0025f * PreferenceManager.getDefaultSharedPreferences(host).getInt("pref_musicvolume", 60), 0.0025f * PreferenceManager.getDefaultSharedPreferences(host).getInt("pref_musicvolume", 60));
-    	        } catch(IllegalStateException e) {
+    	        } catch(IllegalStateException ignored) {
     				
     			}
     		}
@@ -352,7 +345,7 @@ public class Sound implements OnAudioFocusChangeListener {
     		if(musicPlayer != null) {
     			try{
     				musicPlayer.setVolume(0.01f * PreferenceManager.getDefaultSharedPreferences(host).getInt("pref_musicvolume", 60), 0.01f * PreferenceManager.getDefaultSharedPreferences(host).getInt("pref_musicvolume", 60));
-    	        } catch(IllegalStateException e) {
+    	        } catch(IllegalStateException ignored) {
     				
     			}
     		}
@@ -372,7 +365,7 @@ public class Sound implements OnAudioFocusChangeListener {
 		if(musicPlayer != null) {
 			try{
 				return musicPlayer.getCurrentPosition();
-			} catch(IllegalStateException e) {
+			} catch(IllegalStateException ignored) {
 				
 			}
 		}

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -45,8 +44,10 @@ public class MainActivity extends ListActivity {
 	/** This key is used to access the player name, which is returned as an Intent from the gameactivity upon completion (gameover).
 	 *  The Package Prefix is mandatory for Intent data
 	 */
-	public static final String SCORE_KEY = "com.noc.tet.activities.score";
-	
+	public static final String SCORE_KEY = "com.noc.tet.activities.score_score";
+	public static final String LEVEL_KEY = "com.noc.tet.activities.score_level";
+	public static final String APM_KEY = "com.noc.tet.activities.score_apm";
+	public static final String TIME_KEY = "com.noc.tet.activities.score_time";
 	public ScoreDataSource datasource;
 	private SimpleCursorAdapter adapter;
 	private AlertDialog.Builder startLevelDialog;
@@ -68,11 +69,12 @@ public class MainActivity extends ListActivity {
 		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			if ("zh".equals(sysLocale.getLanguage())) { // 如果是中文
-					conf.setLocale(Locale.SIMPLIFIED_CHINESE);
-			} else { // 默认使用英语
-				conf.setLocale(Locale.ENGLISH);
-			}
+			conf.setLocale(sysLocale);
+//			if ("zh".equals(sysLocale.getLanguage())) { // 如果是中文
+//					conf.setLocale(Locale.SIMPLIFIED_CHINESE);
+//			} else { // 默认使用英语
+//				conf.setLocale(Locale.ENGLISH);
+//			}
 		}
 
 		resources.updateConfiguration(conf, dm);
@@ -102,12 +104,15 @@ public class MainActivity extends ListActivity {
                 this,
 	        R.layout.blockinger_list_item,
 	        mc,
-	        new String[] {HighScoreOpenHelper.COLUMN_SCORE, HighScoreOpenHelper.COLUMN_PLAYER_NAME},
-	        new int[] {R.id.text1, R.id.text2},
+	        new String[] {
+					HighScoreOpenHelper.COLUMN_SCORE,
+					HighScoreOpenHelper.COLUMN_PLAYER_NAME,
+					HighScoreOpenHelper.COLUMN_LEVEL,
+					HighScoreOpenHelper.COLUMN_APM,
+					HighScoreOpenHelper.COLUMN_TIME},
+	        new int[] {R.id.text1, R.id.text2,R.id.text3,R.id.text4,R.id.text5},
 	        SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 	    setListAdapter(adapter);
-	    
-	    /* Create Startlevel Dialog */
 		startLevel = 0;
 		startLevelDialog = new AlertDialog.Builder(this);
 		startLevelDialog.setTitle(R.string.startLevelDialogTitle);
@@ -186,9 +191,12 @@ public class MainActivity extends ListActivity {
 
 		String playerName = data.getStringExtra(PLAYER_NAME_KEY);
 		long score = data.getLongExtra(SCORE_KEY,0);
+		int level = data.getIntExtra(LEVEL_KEY,0);
+		int apm = data.getIntExtra(APM_KEY,0);
+		String time = data.getStringExtra(TIME_KEY);
 
 	    datasource.open();
-	    datasource.createScore(score, playerName);
+	    datasource.createScore(score,level,apm,time, playerName);
 	}
 
 	public void onClickClear(View view){

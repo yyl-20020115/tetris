@@ -292,7 +292,7 @@ public class GameState extends Component {
 		if(!activePieces[activeIndex].setPosition(piece_start_x, 0, false, board)) {
 			stateOfTheGame = state_finished;
 			host.sound.gameOverSound();
-			host.gameOver(score, getTimeString(), (int)((float)actions*(60000.0f / gameTime)));
+			host.gameOver(score, level, (int)((float)actions*(60000.0f / gameTime)), getTimeString());
 		}
 	}
 	
@@ -462,10 +462,10 @@ public class GameState extends Component {
 		this.songtime = songtime;
 	}
 
-	public void setLevel(int int1) {
-		level = int1;
-		nextDropTime = host.getResources().getIntArray(R.array.intervals)[int1];
-		clearedLines = 10*int1;
+	public void setLevel(int level) {
+		this.level = level;
+		nextDropTime = host.getResources().getIntArray(R.array.intervals)[level];
+		clearedLines = 10*level;
 	}
 
 	public String getPopupString() {

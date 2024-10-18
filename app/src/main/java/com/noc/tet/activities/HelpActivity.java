@@ -25,31 +25,31 @@ import com.noc.tet.R;
  */
 public class HelpActivity extends PreferenceActivity {
 
-	private AlertDialog.Builder dialog;
-	
-	@SuppressLint("NewApi")
-	@SuppressWarnings("deprecation")
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+    private AlertDialog.Builder dialog;
 
-		addPreferencesFromResource(R.xml.help_menu);
+    @SuppressLint("NewApi")
+    @SuppressWarnings("deprecation")
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-	        ActionBar actionBar = getActionBar();
+        addPreferencesFromResource(R.xml.help_menu);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            ActionBar actionBar = getActionBar();
             assert actionBar != null;
             actionBar.setDisplayHomeAsUpEnabled(true);
-	    }
+        }
 
-		setVolumeControlStream(AudioManager.STREAM_MUSIC);
-		
-		/* Initialize Dialog */
-	    dialog = new AlertDialog.Builder(this);
-	    dialog.setCancelable(true);
-	    dialog.setNeutralButton(R.string.action_backtomain, (dialog, which) -> dialog.dismiss());
-		
-	    /* Register on Click Callbacks */
-		Preference pref = findPreference("pref_help_scoring");
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        /* Initialize Dialog */
+        dialog = new AlertDialog.Builder(this);
+        dialog.setCancelable(true);
+        dialog.setNeutralButton(R.string.action_backtomain, (dialog, which) -> dialog.dismiss());
+
+        /* Register on Click Callbacks */
+        Preference pref = findPreference("pref_help_scoring");
         pref.setOnPreferenceClickListener(preference -> {
             dialog.setTitle(R.string.pref_help_scoring_title);
             dialog.setMessage(R.string.pref_help_scoring_message);
@@ -64,7 +64,7 @@ public class HelpActivity extends PreferenceActivity {
             return true;
         });
 
-		pref = findPreference("pref_help_vibration");
+        pref = findPreference("pref_help_vibration");
         pref.setOnPreferenceClickListener(preference -> {
             dialog.setTitle(R.string.pref_help_vibration_title);
             dialog.setMessage(R.string.pref_help_vibration_message);
@@ -72,7 +72,7 @@ public class HelpActivity extends PreferenceActivity {
             return true;
         });
 
-		pref = findPreference("pref_help_apm");
+        pref = findPreference("pref_help_apm");
         pref.setOnPreferenceClickListener(preference -> {
             dialog.setTitle(R.string.pref_help_apm_title);
             dialog.setMessage(R.string.pref_help_apm_message);
@@ -80,7 +80,7 @@ public class HelpActivity extends PreferenceActivity {
             return true;
         });
 
-		pref = findPreference("pref_help_fps");
+        pref = findPreference("pref_help_fps");
         pref.setOnPreferenceClickListener(preference -> {
             dialog.setTitle(R.string.pref_help_fps_title);
             dialog.setMessage(R.string.pref_help_fps_message);
@@ -88,7 +88,7 @@ public class HelpActivity extends PreferenceActivity {
             return true;
         });
 
-		pref = findPreference("pref_help_randomizer");
+        pref = findPreference("pref_help_randomizer");
         pref.setOnPreferenceClickListener(preference -> {
             dialog.setTitle(R.string.pref_help_randomizer_title);
             dialog.setMessage(R.string.pref_help_randomizer_message);
@@ -96,20 +96,18 @@ public class HelpActivity extends PreferenceActivity {
             return true;
         });
 
-		pref = findPreference("pref_help_resumability");
+        pref = findPreference("pref_help_resumability");
         pref.setOnPreferenceClickListener(preference -> {
             dialog.setTitle(R.string.pref_help_resumability_title);
             dialog.setMessage(R.string.pref_help_resumability_message);
             dialog.show();
             return true;
         });
-		
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		finish();
-		return true;
-	}
-	
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
+    }
 }

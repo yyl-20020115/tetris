@@ -69,10 +69,11 @@ public class WorkThread extends Thread {
 	            if(PreferenceManager.getDefaultSharedPreferences(host).getBoolean("pref_fpslimit", false))
 				{
 		            lastFrameDuration = tempTime - lastFrameStartingTime;
-		            if(lastFrameDuration > (1000.0f/fpslimit))
-		            	lastDelay = Math.max(0, lastDelay - 25);
-		            else
-		            	lastDelay+= 25;
+		            if(lastFrameDuration > (1000.0f/fpslimit)) {
+                        lastDelay = Math.max(0, lastDelay - 25);
+                    } else {
+                        lastDelay+= 25;
+                    }
 
                     if (lastDelay != 0) {
                         try {// do sleep!

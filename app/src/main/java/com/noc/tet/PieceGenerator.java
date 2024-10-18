@@ -1,4 +1,3 @@
-
 package com.noc.tet;
 
 import java.util.Random;

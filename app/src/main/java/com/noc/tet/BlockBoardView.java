@@ -1,4 +1,3 @@
-
 package com.noc.tet;
 
 import com.noc.tet.activities.GameActivity;

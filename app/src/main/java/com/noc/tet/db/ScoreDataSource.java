@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.annotation.NonNull;
+
 public class ScoreDataSource {
 
     // Database fields
@@ -45,7 +47,7 @@ public class ScoreDataSource {
                 allColumns, HighScoreOpenHelper.COLUMN_ID + " = " + insertId, null,
                 null, null, HighScoreOpenHelper.COLUMN_SCORE + " DESC");
         cursor.moveToFirst();
-        cursorToScore(cursor);
+        //cursorToScore(cursor);
         cursor.close();
     }
 
@@ -73,7 +75,8 @@ public class ScoreDataSource {
         database.delete(HighScoreOpenHelper.TABLE_HIGH_SCORES, "", new String[0]);
     }
 
-    private void cursorToScore(Cursor cursor) {
+    @NonNull
+    private Score cursorToScore(Cursor cursor) {
         Score score = new Score();
         score.setId(cursor.getLong(0));
         score.setScore(cursor.getLong(1));
@@ -81,6 +84,7 @@ public class ScoreDataSource {
         score.setLevel(cursor.getInt(3));
         score.setApm(cursor.getInt(4));
         score.setTime(cursor.getString(5));
+        return score;
     }
 
     public Cursor getCursor() {

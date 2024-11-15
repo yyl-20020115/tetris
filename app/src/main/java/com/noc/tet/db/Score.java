@@ -1,5 +1,7 @@
 package com.noc.tet.db;
 
+import androidx.annotation.NonNull;
+
 public class Score {
     private long id;
     private long score;
@@ -42,6 +44,7 @@ public class Score {
     }
 
     // Will be used by the ArrayAdapter in the ListView
+    @NonNull
     @Override
     public String toString() {
         return score + "@" + playerName;
